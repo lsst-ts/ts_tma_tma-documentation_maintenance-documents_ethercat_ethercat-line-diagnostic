@@ -1,92 +1,135 @@
 # EtherCATLineDiagnostic
 
+| **Requested by:** | **GHESA** |
+| --- | --- |
+| **Doc. Code / Version nº:** | --/1.1 |
+| **Editor:** | Alberto Izpizua |
+| **Approved by:** | Julen García |
 
 
-## Getting started
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Document History
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+|Version|Date|Editor|Comments|
+|--|--|--|--|
+|1.0|28/09/2022|A. Izpizua|Document Creation|s
+|1.1|01/03/2023|A. Izpizua|Add info to check IO and Phase power supply EtherCAT line|
 
-## Add your files
+## Introduction
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+This repository has the documentation to diagnose the EtherCAT lines in the TMA. Also the TwinCAT solutions to perform the diagnose are included in the repository.
 
-```
-cd existing_repo
-git remote add origin https://gitlab.tekniker.es/publico/3151-lsst/documentation/maintenancedocuments/ethercatlinediagnostic.git
-git branch -M master
-git push -uf origin master
-```
+This document shows a simple overview of the TwinCAT 3 tool used to diagnose the EtherCAT line. This document has not the intention to instruct any person on deep understanding of the TwinCAT 3 tool for any use. This document is only for reference of the work done in the EtherCAT line diagnosis.
 
-## Integrate with your tools
+The described use, and the project used is only valid for the Phase Main Drives EtherCAT line. It is not valid for the secondary EtherCAT line, the one with the remote I/Os and the Power Supply.
 
-- [ ] [Set up project integrations](https://gitlab.tekniker.es/publico/3151-lsst/documentation/maintenancedocuments/ethercatlinediagnostic/-/settings/integrations)
+## Reference document list
 
-## Collaborate with your team
+|No.|Document|Code|Version|
+|--|--|--|--|
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+## Technical description
 
-## Test and Deploy
+### Hardware connection
 
-Use the built-in continuous integration in GitLab.
+To diagnose the EtherCAT line the windows computer sent by Tekniker for early validation and remote support is used. This computer has the possibility to act as an EtherCAT master, as a real time capable ethernet adapter is the integrated in it (it is labelled as MainPort).
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+There are two options for the hardware connection depending if the diagnosis is going to be done in the drives line or the IOs and Phase Power supply line
 
-***
+#### Drives EtherCAT line
+Connections to test this line are:
 
-# Editing this README
+1. Remove the cable, 10CS_205A, wired to the output of the cRIO, 201A1, located in the TMA-AZ-MCS-CBT-0001.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+2. Wire the 10CS_205A cable to the Ethernet link of the computer labelled as MainPort.
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+#### Remote IOs and Phase Power supply EtherCAT line
+Connections to test this line are:
 
-## Name
-Choose a self-explaining name for your project.
+1. Remove the 221W1 cable from the 220A1 element
+2. Connect an Ethernet Cable between Main port and the free port in the 220A1.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+![Phoenix contact port to remove cable](Figures/PhoenixHeader.jpg)
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+### TwiCAT
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+The tool that is used to diagnose is TwinCAT 3 by Beckhoff. In the following lines the use of this tool is briefly described.
+1.	Open TwinCAT. There are two options:
+    -	In the right side of the windows toolbar find the TwinCAT runtime icon, and right click on it to select the TwinCAT XAE (TcXaeShell)
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+    ![TwinCAT runtime icon](Figures/TwincatRuntimeIcon.png)
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+    ![Select TwinCAT to Open](Figures/SelectTwincatToOpen.png)
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+    - In the Windows start, search for TwinCAT XAE Shell
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+    ![TwinCAT XAE Shell in Windows start](Figures/TwincatXaeShellWindowsStart.png)
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+2. Open the Project created for the diagnosis of the  EtherCAT line
+   -  For the drives EtherCAT line use the "PhaseDriveEtherCATLineTesting.sln" solution.
+   -  For the IOs and the Power Supply use the "PowerSupplyAndIOs.sln" solution.
+  
+    ![Choose desired solution](Figures/TwincatDesiredSolution.png)
+3. In the Solution Explorer, in I/ODevicesDevice 1 click on the arrow to show the entire EtherCAT line
+    ![EtherCAT master configuration in the TwinCAT solution explorer](Figures/EthercatMasterConfigurationInTheTwincatSolutionExplorer.png)
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+4.	Only for drives EtherCAT line. Ensure that the Box 63 corresponding to the cRIO 9145 is disabled. The EtherCAT line starts just after the cRIO. If it is not disabled, right click on it, and select Disable in the context menu.
+    ![cRIO disabled in the EtherCAT master](Figures/crioDisabledInTheEthercatMaster.png)
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+    ![Slave context menu for disabling a slave if necessary](Figures/SlaveContextMenuForDisablingSlaveIfNecessary.png)
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+5. Activate configuration using the button in the toolbar
+   ![Activate configuration button](Figures/ActivateConfigurationButton.png)
 
-## License
-For open source projects, say how it is licensed.
+6.	Click OK on the next dialog
+    ![Activate configuration dialog](Figures/ActivateConfigurationDialog.png)
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+7. If asked for trial licenses, click on yes and copy the shown characters in the next window.
+   ![License missing dialog](Figures/LicenseMissingDialog.png)
+   ![Insert trial license code](Figures/InsertTrialLicenseCode.png)
+
+8.	It takes some time to load the project and start the system. After this time check that the TwinCAT system is in Run Mode.
+    ![TwinCAT in run mode](Figures/TwincatInRunMode.png)
+
+9.	Check that all slaves are in OP state (this means operational state), by selecting Device 1 (the EtherCAT master) from the solution explorer on the left pane and go to the Online tab. 
+    ![Most slaves in OP state, but one in PREOP](Figures/MostSlavesInOP.png)
+
+    If all slaves are NOT in OP state, try next options:
+    - 	Change to configuration mode (button next to the Run Mode) and then to run mode again. 
+    -	Go to the slave that is not in OP mode in the Solution Explorer and click on it. Find the online view and manage the state machine of the slave with the buttons. To clear errors properly, it is best to put the slave in Init state.
+    ![Slave online tab](Figures/SlaveOnlineTab.png)
+
+10.	To display more diagnostics, select the EtherCAT master from the solution explorer (left side of the window) and go to EtherCAT tab. There Click on Advanced Settings…. 
+    ![Advanced EtherCAT Configuration](Figures/AdvancedEthercatConfigurarion.png)
+
+11.	Go to Diagnosis->Online View tab and select:
+    -	Select Show Change Counters (State Changes / Not Present).  Add the Changes column in the Online tab showing two counters separated by a slash. The first counter shows the number of abnormal state transitions. The second counter shows how often the communication with the slave device has been interrupted.
+    - 	In the blue box, shown in Figure 16, check next topics. Those should be counters in the slaves, but they depends on the slave implementation
+        -	300 ‘CRC A’. Byte 300 is Frame Error Counter port A and Byte 301 is Physical Layer Error Counter port A. Two bytes could also be a RX Error Counter for port A.
+        -	302 ‘CRC B’. Byte 302 is Frame Error Counter port B and Byte 303 is Physical Layer Error Counter port B. Two bytes could also be a RX Error Counter for port B.
+        -	304 ‘CRC C’. Byte 304 is Frame Error Counter port C and Byte 305 is Physical Layer Error Counter port C. Two bytes could also be a RX Error Counter for port C.
+        -	306 ‘CRC D’. Byte 306 is Frame Error Counter port D and Byte 307 is Physical Layer Error Counter port D. Two bytes could also be a RX Error Counter for port D.
+        -	310 ‘Link Lost A/B’. Lost Link Counter port A and B. The 310 byte is for port A while the 311 byte is for port B.
+        -	312 ‘Link Lost C/D’. Lost Link Counter port C and D. The 312 byte is for port C while the 313 byte is for port D.
+![EtherCAT diagnosis configuration](Figures/EthercatDiagnosisConfiguration.png)
+
+## Results
+
+The following results are only for the first test made in the EtherCAT line by Tekniker. Any other test is outside Tekniker’s scope (even this one is outside).
+
+The test started on 2022/09/27 at 10:00 Chile time. The results on 2022/09/28 at 3:50 Chile time are shown in figure bellow (the computer time was 1 hour behind the actual Chile time).
+It can be shown that there are several Lost Frames, as well as Tx/Rx Errors. Those counters should be at zero or at very low number (less than 5) after only 18 hours. It is also noticeable that the slaves changed their state for 147 times (this number should be 1), for the first 9 slaves and 153 for next slaves. This means that the line went down completely for 146 and partially down for 152.
+The 310 register shows a number for slaves 9 and 10. This register should be a counter, but is constant during the 18 hours test. As this register is managed by the slave, this behavior must be checked with Phase.
+The CRC shows a 11 for the input in slave 10. This counter is reseted every time the system is restarted (147 times shown in the Changes column).
+After locking for a while to the online tab, it can be appreciated that the state of all the slaves disappear (connection lost) and then start the line again starting with Init state. This is coherent with the number 147 shown in Changes column.
+Also the Reg 300 for slave 10 could be appreciated to flash when the CRC for this slave increases. This register should be a counter, but the implementation of this register must be checked with Phase.
+![Results after nearly 18 hours working](Figures/ResultsAfterNearly18HoursWorking.png)
+
+
+
+
+## ANNEX 1. Slave modules ESI files
+
+C:\TwinCAT\3.1\Config\Io\EtherCAT
+
+
