@@ -12,12 +12,16 @@
 
 |Version|Date|Editor|Comments|
 |--|--|--|--|
-|1.0|28/09/2022|A. Izpizua|Document Creation|s
+|1.0|28/09/2022|A. Izpizua|Document Creation|
 |1.1|01/03/2023|A. Izpizua|Add info to check IO and Phase power supply EtherCAT line|
 
 ## Introduction
 
 This repository has the documentation to diagnose the EtherCAT lines in the TMA. Also the TwinCAT solutions to perform the diagnose are included in the repository.
+
+In the "TwinCATProjects\PowerSupplyAndIOs\PowerSupplyAndIOs" folder is located the solution for Phase Power Supply and remote IOs EtherCAT line.
+
+In the "" folder is located the solution for main axes drives EtherCAT line
 
 This document shows a simple overview of the TwinCAT 3 tool used to diagnose the EtherCAT line. This document has not the intention to instruct any person on deep understanding of the TwinCAT 3 tool for any use. This document is only for reference of the work done in the EtherCAT line diagnosis.
 
@@ -47,7 +51,7 @@ Connections to test this line are:
 Connections to test this line are:
 
 1. Remove the 221W1 cable from the 220A1 element
-2. Connect an Ethernet Cable between Main port and the free port in the 220A1.
+2. Connect an Ethernet Cable between the Ethernet link of the computer labelled as Main port and the free port in the 220A1.
 
 ![Phoenix contact port to remove cable](Figures/PhoenixHeader.jpg)
 
@@ -69,37 +73,47 @@ The tool that is used to diagnose is TwinCAT 3 by Beckhoff. In the following lin
    -  For the drives EtherCAT line use the "PhaseDriveEtherCATLineTesting.sln" solution.
    -  For the IOs and the Power Supply use the "PowerSupplyAndIOs.sln" solution.
   
-    ![Choose desired solution](Figures/TwincatDesiredSolution.png)
+    ![Choose desired solution](Figures/TwincatDesiredSolution.png)   
+
 3. In the Solution Explorer, in I/ODevicesDevice 1 click on the arrow to show the entire EtherCAT line
+   
     ![EtherCAT master configuration in the TwinCAT solution explorer](Figures/EthercatMasterConfigurationInTheTwincatSolutionExplorer.png)
 
 4.	Only for drives EtherCAT line. Ensure that the Box 63 corresponding to the cRIO 9145 is disabled. The EtherCAT line starts just after the cRIO. If it is not disabled, right click on it, and select Disable in the context menu.
-    ![cRIO disabled in the EtherCAT master](Figures/crioDisabledInTheEthercatMaster.png)
+
+    ![cRIO disabled in the EtherCAT master](Figures/crioDisabledInEthercatMaster.png)
 
     ![Slave context menu for disabling a slave if necessary](Figures/SlaveContextMenuForDisablingSlaveIfNecessary.png)
 
 5. Activate configuration using the button in the toolbar
+   
    ![Activate configuration button](Figures/ActivateConfigurationButton.png)
 
 6.	Click OK on the next dialog
+
     ![Activate configuration dialog](Figures/ActivateConfigurationDialog.png)
 
 7. If asked for trial licenses, click on yes and copy the shown characters in the next window.
+   
    ![License missing dialog](Figures/LicenseMissingDialog.png)
    ![Insert trial license code](Figures/InsertTrialLicenseCode.png)
 
 8.	It takes some time to load the project and start the system. After this time check that the TwinCAT system is in Run Mode.
+
     ![TwinCAT in run mode](Figures/TwincatInRunMode.png)
 
 9.	Check that all slaves are in OP state (this means operational state), by selecting Device 1 (the EtherCAT master) from the solution explorer on the left pane and go to the Online tab. 
+
     ![Most slaves in OP state, but one in PREOP](Figures/MostSlavesInOP.png)
 
     If all slaves are NOT in OP state, try next options:
     - 	Change to configuration mode (button next to the Run Mode) and then to run mode again. 
     -	Go to the slave that is not in OP mode in the Solution Explorer and click on it. Find the online view and manage the state machine of the slave with the buttons. To clear errors properly, it is best to put the slave in Init state.
+
     ![Slave online tab](Figures/SlaveOnlineTab.png)
 
 10.	To display more diagnostics, select the EtherCAT master from the solution explorer (left side of the window) and go to EtherCAT tab. There Click on Advanced Settings…. 
+
     ![Advanced EtherCAT Configuration](Figures/AdvancedEthercatConfigurarion.png)
 
 11.	Go to Diagnosis->Online View tab and select:
@@ -111,6 +125,7 @@ The tool that is used to diagnose is TwinCAT 3 by Beckhoff. In the following lin
         -	306 ‘CRC D’. Byte 306 is Frame Error Counter port D and Byte 307 is Physical Layer Error Counter port D. Two bytes could also be a RX Error Counter for port D.
         -	310 ‘Link Lost A/B’. Lost Link Counter port A and B. The 310 byte is for port A while the 311 byte is for port B.
         -	312 ‘Link Lost C/D’. Lost Link Counter port C and D. The 312 byte is for port C while the 313 byte is for port D.
+
 ![EtherCAT diagnosis configuration](Figures/EthercatDiagnosisConfiguration.png)
 
 ## Results
@@ -123,6 +138,7 @@ The 310 register shows a number for slaves 9 and 10. This register should be a c
 The CRC shows a 11 for the input in slave 10. This counter is reseted every time the system is restarted (147 times shown in the Changes column).
 After locking for a while to the online tab, it can be appreciated that the state of all the slaves disappear (connection lost) and then start the line again starting with Init state. This is coherent with the number 147 shown in Changes column.
 Also the Reg 300 for slave 10 could be appreciated to flash when the CRC for this slave increases. This register should be a counter, but the implementation of this register must be checked with Phase.
+
 ![Results after nearly 18 hours working](Figures/ResultsAfterNearly18HoursWorking.png)
 
 
@@ -130,6 +146,21 @@ Also the Reg 300 for slave 10 could be appreciated to flash when the CRC for thi
 
 ## ANNEX 1. Slave modules ESI files
 
+To discover the modules and to work properly the ESI files for the Phase slaves and for Phoenix Contact slaves must be located in the Beckhoff folder designated to allocate ESI files.
+
 C:\TwinCAT\3.1\Config\Io\EtherCAT
+
+ESI files could be located in the "https://gitlab.tekniker.es/aut/projects/3151-LSST/LabVIEWCode/PXIController.git" repository inside the "ESIFiles/Phoenix" and "ESIFiles/Phase/lsst_xml" folders.
+
+## ANNEX 2. BIOS configuration
+
+The Beckhoff master need to disable the virtualization in the BIOS. To access the BIOS reboot the computer and when it start switching on the system press F2 to access the BIOS.
+
+![Virtuzation suppoort in the BIOS](Figures/VirtualizationSupport.png)
+
+![Disable Virtualization in the BIOS](Figures/BIOS_EnableVirtualization.png)
+
+
+
 
 
