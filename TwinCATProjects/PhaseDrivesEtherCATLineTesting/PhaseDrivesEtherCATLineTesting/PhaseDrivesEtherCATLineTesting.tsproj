@@ -1,0 +1,1250 @@
+<?xml version="1.0"?>
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.25">
+	<ImageDatas>
+		<ImageData Id="1000">424de6000000000000007600000028000000100000000e000000010004000000000070000000c40e0000c40e0000000000000000000000000000000080000080000000808000800000008000800080800000c0c0c000808080000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00dd8888888888888dd88887777777788dd88087784700780dd80087708734730dd80087777777778dd80087780777778dd8008f708777778dd8008f780770778dd8008ff77780878dd8008ff38780800dd8808ff77780880dd2508fccfff0788dd8634fc8fffff88ddd8536888888888d</ImageData>
+	</ImageDatas>
+	<Project ProjectGUID="{FAB46AD0-F99F-41F5-83CE-8139C4C8C072}" Target64Bit="true" ShowHideConfigurations="#x106">
+		<System>
+			<Settings MaxCpus="16" NonWinCpus="1">
+				<Cpu CpuId="15"/>
+			</Settings>
+			<Tasks>
+				<Task Id="3" Priority="20" CycleTime="10000" AmsPort="350" AdtTasks="true">
+					<Name>PlcTask</Name>
+				</Task>
+			</Tasks>
+		</System>
+		<Plc>
+			<Project GUID="{A3EE6574-4226-43D7-8825-565477F52B97}" Name="Project" PrjFilePath="Project\Project.plcproj" TmcFilePath="Project\Project.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Project\Project.tmc">
+					<Name>Project Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Vars VarGrpType="1">
+						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>MAIN.MyVar</Name>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.StatusWordDrive2</Name>
+							<Type>UINT</Type>
+						</Var>
+					</Vars>
+					<Contexts>
+						<Context>
+							<Id NeedCalleeCall="true">0</Id>
+							<Name>PlcTask</Name>
+							<ManualConfig>
+								<OTCID>#x02010030</OTCID>
+							</ManualConfig>
+							<Priority>20</Priority>
+							<CycleTime>1000000</CycleTime>
+						</Context>
+					</Contexts>
+					<TaskPouOids>
+						<TaskPouOid Prio="20" OTCID="#x08502001"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+		</Plc>
+		<Io>
+			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="192.168.212.233.2.1" RemoteName="Device 1 (EtherCAT)" InfoImageId="2">
+				<Name>Device 1 (EtherCAT)</Name>
+				<AddressInfo>
+					<Pnp>
+						<DeviceDesc>IntegraedEthernet (TwinCAT-Intel PCI Ethernet Adapt</DeviceDesc>
+						<DeviceName>\DEVICE\{30CB6D4D-CBE0-4D29-B729-5C396D55D79C}</DeviceName>
+						<DeviceData>b07b2506734c</DeviceData>
+					</Pnp>
+				</AddressInfo>
+				<Image Id="1" AddrType="9" ImageType="3">
+					<Name>Image</Name>
+				</Image>
+				<Box Id="63" Disabled="true" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Box 63 (NI 9145)</Name>
+					<ImageId>1000</ImageId>
+					<EtherCAT SlaveType="3" AdsServerAddress="c0a8d4e90240e903" PdiType="#x0008" CheckProductCode="false" CycleMBoxPolling="true" CoeType="39" FoeType="1" VendorId="#x000001f9" ProductCode="#x000023b9" RevisionNo="#x00000001" InfoDataAddr="true" InfoDataNetId="true" InfoDataDcTimes="true" DcPotentialRefClock="true" GenerateOwnNetId="true" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="NI 9145" Desc="NI 9145" PortABoxInfo="#x00ffffff">
+						<SyncMan>00c70001260001000100000040000001000100c726010000</SyncMan>
+						<SyncMan>00c40003220001000200000040000003000300c422010000</SyncMan>
+						<SyncMan>0010060064000100030000000000001e001e001064010000</SyncMan>
+						<SyncMan>006a0a0020000100040000000000001e001e006a20010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000020000000200000000000000</Fmmu>
+						<Fmmu>0000000000000000006a00010100000002000000020000000300000000000000</Fmmu>
+						<BootStrapData>001c000400180004</BootStrapData>
+						<DcData>0003000000000000000000000000000001000000010000000000000000000000</DcData>
+						<DcMode>44634f66660000000000000000000000467265652d52756e204d6f646500000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>446353796e630000000000000000000053796e6368726f6e697a6564204d6f6465000000000000000000000000000000000000000000000000000000000000030100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Input Variables" Index="#x1a00" Flags="#x0210" SyncMan="3">
+							<Entry Name="CyclesCounter" Index="#x6000" Sub="#x01" Flags="#x00001000">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="FPGACodeRunningClock" Index="#x6000" Sub="#x02" Flags="#x00001000">
+								<Type>USINT</Type>
+							</Entry>
+							<Entry Name="InputVirtualPointTiming" Index="#x6000" Sub="#x03" Flags="#x00001000">
+								<Type>UDINT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Slot 1 - 9401" Index="#x1a01" Flags="#x0010" SyncMan="3">
+							<Entry Name="IN 1.DI" Index="#x6010" Sub="#x01">
+								<Type>USINT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Output Variables" Index="#x1600" InOut="1" Flags="#x0210" SyncMan="2">
+							<Entry Name="OnTime_ticks" Index="#x7000" Sub="#x01" Flags="#x00001000">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Reset" Index="#x7000" Sub="#x02" Flags="#x00001000">
+								<Type>USINT</Type>
+							</Entry>
+							<Entry Name="WaitTime_ticks" Index="#x7000" Sub="#x03" Flags="#x00001000">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Slot 1 - 9401" Index="#x1601" InOut="1" Flags="#x0010" SyncMan="2">
+							<Entry Name="OUT 1.DO" Index="#x7010" Sub="#x01">
+								<Type>USINT</Type>
+							</Entry>
+						</Pdo>
+					</EtherCAT>
+				</Box>
+				<Box Id="1" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 1 (TW.LSST.AZIMUTH)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CheckVendorId="false" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x00018984" RevisionNo="#x0208000a" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.AZIMUTH" Desc="TW.LSST.AZIMUTH" PortABoxInfo="#x00ffffff">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c3afc2bfc2bd730000000044432053796e6368726f6e6f75732032353020c3afc2bfc2bd7300000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="4" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 4 (TW.LSST.AZIMUTH)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x00018984" RevisionNo="#x0208000a" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.AZIMUTH" Desc="TW.LSST.AZIMUTH" PortABoxInfo="#x01000001">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c3afc2bfc2bd730000000044432053796e6368726f6e6f75732032353020c3afc2bfc2bd7300000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="5" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 5 (TW.LSST.AZIMUTH)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x00018984" RevisionNo="#x0208000a" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.AZIMUTH" Desc="TW.LSST.AZIMUTH" PortABoxInfo="#x01000004">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c3afc2bfc2bd730000000044432053796e6368726f6e6f75732032353020c3afc2bfc2bd7300000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="8" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 8 (TW.LSST.AZIMUTH)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x00018984" RevisionNo="#x0208000a" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.AZIMUTH" Desc="TW.LSST.AZIMUTH" PortABoxInfo="#x01000005">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c3afc2bfc2bd730000000044432053796e6368726f6e6f75732032353020c3afc2bfc2bd7300000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="9" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 9 (LSST.HS.board)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CheckProductCode="false" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" RevisionNo="#x02080004" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="LSST.HS.board" Desc="LSST.HS.board" PortABoxInfo="#x01000008">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001000002400000003000000000020000000001024010000</SyncMan>
+						<SyncMan>801102002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000000000020000000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c2b573000000000000000044432053796e6368726f6e6f75732032353020c2b5730000000000000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="TPDO 1 Mapping Parameter" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Angle" Index="#x4004">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="10" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 10 (TW.LSST.AZIMUTH)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x00018984" RevisionNo="#x0208000a" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.AZIMUTH" Desc="TW.LSST.AZIMUTH" PortABoxInfo="#x01000009">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c3afc2bfc2bd730000000044432053796e6368726f6e6f75732032353020c3afc2bfc2bd7300000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="15" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 15 (TW.LSST.AZIMUTH)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x00018984" RevisionNo="#x0208000a" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.AZIMUTH" Desc="TW.LSST.AZIMUTH" PortABoxInfo="#x0100000a">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c3afc2bfc2bd730000000044432053796e6368726f6e6f75732032353020c3afc2bfc2bd7300000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="16" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 16 (TW.LSST.AZIMUTH)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x00018984" RevisionNo="#x0208000a" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.AZIMUTH" Desc="TW.LSST.AZIMUTH" PortABoxInfo="#x0100000f">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c3afc2bfc2bd730000000044432053796e6368726f6e6f75732032353020c3afc2bfc2bd7300000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="17" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 17 (TW.LSST.AZIMUTH)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x00018984" RevisionNo="#x0208000a" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.AZIMUTH" Desc="TW.LSST.AZIMUTH" PortABoxInfo="#x01000010">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c3afc2bfc2bd730000000044432053796e6368726f6e6f75732032353020c3afc2bfc2bd7300000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="18" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 18 (TW.LSST.ALTITUDE)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x000187ce" RevisionNo="#x02080006" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.ALTITUDE" Desc="TW.LSST.ALTITUDE" PortABoxInfo="#x01000011">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c2b573000000000000000044432053796e6368726f6e6f75732032353020c2b5730000000000000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="23" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 23 (TW.LSST.ALTITUDE)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x000187ce" RevisionNo="#x02080006" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.ALTITUDE" Desc="TW.LSST.ALTITUDE" PortABoxInfo="#x01000012">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c2b573000000000000000044432053796e6368726f6e6f75732032353020c2b5730000000000000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="24" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 24 (TW.LSST.ALTITUDE)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x000187ce" RevisionNo="#x02080006" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.ALTITUDE" Desc="TW.LSST.ALTITUDE" PortABoxInfo="#x01000017">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c2b573000000000000000044432053796e6368726f6e6f75732032353020c2b5730000000000000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="25" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 25 (TW.LSST.ALTITUDE)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x000187ce" RevisionNo="#x02080006" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.ALTITUDE" Desc="TW.LSST.ALTITUDE" PortABoxInfo="#x01000018">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c2b573000000000000000044432053796e6368726f6e6f75732032353020c2b5730000000000000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="26" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 26 (LSST.HS.board)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CheckProductCode="false" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" RevisionNo="#x02080004" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="LSST.HS.board" Desc="LSST.HS.board" PortABoxInfo="#x01000019">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001000002400000003000000000020000000001024010000</SyncMan>
+						<SyncMan>801102002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000000000020000000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c2b573000000000000000044432053796e6368726f6e6f75732032353020c2b5730000000000000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="TPDO 1 Mapping Parameter" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Angle" Index="#x4004">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="27" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 27 (TW.LSST.ALTITUDE)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x000187ce" RevisionNo="#x02080006" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.ALTITUDE" Desc="TW.LSST.ALTITUDE" PortABoxInfo="#x0100001a">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c2b573000000000000000044432053796e6368726f6e6f75732032353020c2b5730000000000000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="37" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 37 (TW.LSST.ALTITUDE)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x000187ce" RevisionNo="#x02080006" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.ALTITUDE" Desc="TW.LSST.ALTITUDE" PortABoxInfo="#x0100001b">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c2b573000000000000000044432053796e6368726f6e6f75732032353020c2b5730000000000000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="38" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 38 (TW.LSST.AZIMUTH)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x00018984" RevisionNo="#x0208000a" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.AZIMUTH" Desc="TW.LSST.AZIMUTH" PortABoxInfo="#x01000025">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c3afc2bfc2bd730000000044432053796e6368726f6e6f75732032353020c3afc2bfc2bd7300000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="39" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 39 (TW.LSST.AZIMUTH)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x00018984" RevisionNo="#x0208000a" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.AZIMUTH" Desc="TW.LSST.AZIMUTH" PortABoxInfo="#x01000026">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c3afc2bfc2bd730000000044432053796e6368726f6e6f75732032353020c3afc2bfc2bd7300000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="40" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 40 (TW.LSST.AZIMUTH)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x00018984" RevisionNo="#x0208000a" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.AZIMUTH" Desc="TW.LSST.AZIMUTH" PortABoxInfo="#x01000027">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c3afc2bfc2bd730000000044432053796e6368726f6e6f75732032353020c3afc2bfc2bd7300000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="41" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 41 (TW.LSST.AZIMUTH)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x00018984" RevisionNo="#x0208000a" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.AZIMUTH" Desc="TW.LSST.AZIMUTH" PortABoxInfo="#x01000028">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c3afc2bfc2bd730000000044432053796e6368726f6e6f75732032353020c3afc2bfc2bd7300000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="42" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 42 (TW.LSST.AZIMUTH)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x00018984" RevisionNo="#x0208000a" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.AZIMUTH" Desc="TW.LSST.AZIMUTH" PortABoxInfo="#x01000029">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c3afc2bfc2bd730000000044432053796e6368726f6e6f75732032353020c3afc2bfc2bd7300000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="43" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 43 (TW.LSST.AZIMUTH)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x00018984" RevisionNo="#x0208000a" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.AZIMUTH" Desc="TW.LSST.AZIMUTH" PortABoxInfo="#x0100002a">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c3afc2bfc2bd730000000044432053796e6368726f6e6f75732032353020c3afc2bfc2bd7300000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="44" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 44 (TW.LSST.AZIMUTH)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x00018984" RevisionNo="#x0208000a" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.AZIMUTH" Desc="TW.LSST.AZIMUTH" PortABoxInfo="#x0100002b">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c3afc2bfc2bd730000000044432053796e6368726f6e6f75732032353020c3afc2bfc2bd7300000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="45" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 45 (TW.LSST.AZIMUTH)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x00018984" RevisionNo="#x0208000a" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.AZIMUTH" Desc="TW.LSST.AZIMUTH" PortABoxInfo="#x0100002c">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c3afc2bfc2bd730000000044432053796e6368726f6e6f75732032353020c3afc2bfc2bd7300000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="56" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 56 (TW.LSST.ALTITUDE)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x000187ce" RevisionNo="#x02080006" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.ALTITUDE" Desc="TW.LSST.ALTITUDE" PortABoxInfo="#x0100002d">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c2b573000000000000000044432053796e6368726f6e6f75732032353020c2b5730000000000000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="57" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 57 (TW.LSST.ALTITUDE)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x000187ce" RevisionNo="#x02080006" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.ALTITUDE" Desc="TW.LSST.ALTITUDE" PortABoxInfo="#x01000038">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c2b573000000000000000044432053796e6368726f6e6f75732032353020c2b5730000000000000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="58" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 58 (TW.LSST.ALTITUDE)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x000187ce" RevisionNo="#x02080006" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.ALTITUDE" Desc="TW.LSST.ALTITUDE" PortABoxInfo="#x01000039">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c2b573000000000000000044432053796e6368726f6e6f75732032353020c2b5730000000000000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="59" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 59 (TW.LSST.ALTITUDE)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x000187ce" RevisionNo="#x02080006" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.ALTITUDE" Desc="TW.LSST.ALTITUDE" PortABoxInfo="#x0100003a">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c2b573000000000000000044432053796e6368726f6e6f75732032353020c2b5730000000000000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="60" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 60 (LSST.HS.board)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CheckProductCode="false" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" RevisionNo="#x02080004" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="LSST.HS.board" Desc="LSST.HS.board" PortABoxInfo="#x0100003b">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001000002400000003000000000020000000001024010000</SyncMan>
+						<SyncMan>801102002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000000000020000000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c2b573000000000000000044432053796e6368726f6e6f75732032353020c2b5730000000000000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="TPDO 1 Mapping Parameter" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Angle" Index="#x4004">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="61" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 61 (TW.LSST.ALTITUDE)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x000187ce" RevisionNo="#x02080006" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.ALTITUDE" Desc="TW.LSST.ALTITUDE" PortABoxInfo="#x0100003c">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c2b573000000000000000044432053796e6368726f6e6f75732032353020c2b5730000000000000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<Box Id="62" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Drive 62 (TW.LSST.ALTITUDE)</Name>
+					<ImageId>38</ImageId>
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" Unsupported64BitDc="true" CoeType="31" VendorId="#x000000d9" ProductCode="#x000187ce" RevisionNo="#x02080006" InfoDataAddr="true" InfoDataSoeDS401="true" CheckRevisionNoType="5" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TW.LSST.ALTITUDE" Desc="TW.LSST.ALTITUDE" PortABoxInfo="#x0100003d">
+						<SyncMan>001380002600010001000000800080008000001326010000</SyncMan>
+						<SyncMan>801380002200010002000000800080008000801322010000</SyncMan>
+						<SyncMan>001006002400010003000000000020000000001024010000</SyncMan>
+						<SyncMan>801106002000010004000000000020000000801120010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000801100010100000002000000000000000000000000000000</Fmmu>
+						<DcMode>53796e63000000000000000000000000534d2053796e6368726f6e6f7573000000000000000000000000000000000000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>4443323530c2b573000000000000000044432053796e6368726f6e6f75732032353020c2b5730000000000000000000090d003006400000000000000000000030000000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<DcMode>467265652d72756e0000000000000000444320756e757365640000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+						<Pdo Name="Inputs" Index="#x1a00" Flags="#x0000" SyncMan="3">
+							<Entry Name="Status word" Index="#x6041">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current feedback quadrature" Index="#x5010">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Motor windings temperature" Index="#x5105">
+								<Type>INT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="Outputs" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
+							<Entry Name="Control word" Index="#x6040">
+								<Type>UINT</Type>
+							</Entry>
+							<Entry Name="Current reference quadrature" Index="#x5000">
+								<Type>INT</Type>
+							</Entry>
+							<Entry Name="Electrical angle reference" Index="#x5002">
+								<Type>UINT</Type>
+							</Entry>
+						</Pdo>
+						<CoeProfile ProfileNo="402"/>
+					</EtherCAT>
+				</Box>
+				<EtherCAT/>
+			</Device>
+		</Io>
+	</Project>
+	<Mappings>
+		<MappingInfo Identifier="{00000000-2001-0850-0020-500810000403}" Id="#x02030010"/>
+		<OwnerA Name="TIPC^Project^Project Instance">
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Drive 1 (TW.LSST.AZIMUTH)">
+				<Link VarA="PlcTask Inputs^MAIN.StatusWordDrive2" VarB="Inputs^Status word"/>
+			</OwnerB>
+		</OwnerA>
+	</Mappings>
+</TcSmProject>

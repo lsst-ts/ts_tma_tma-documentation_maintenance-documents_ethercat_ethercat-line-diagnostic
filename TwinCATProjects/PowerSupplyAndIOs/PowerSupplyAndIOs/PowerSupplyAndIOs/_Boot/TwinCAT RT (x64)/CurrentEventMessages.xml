@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<TcEventSources Version="2">
+	<Source>
+		<GUID>{28111931-0084-0000-8307-290001000000}</GUID>
+		<Name LcId="1031">AXL F BK EC, Axioline EtherCAT Buskoppler</Name>
+		<Name LcId="1033">AXL F BK EC, Axioline EtherCAT Fieldbus coupler</Name>
+		<Event>
+			<Id>0</Id>
+			<Message LcId="1031">Busfehler behoben</Message>
+			<Message LcId="1033">Busfailure gone</Message>
+		</Event>
+		<Event>
+			<Id>3073</Id>
+			<Message LcId="1031">Axioline Teilnehmer {0} verlohren</Message>
+			<Message LcId="1033">Lost axioline module {0}</Message>
+		</Event>
+		<Event>
+			<Id>3074</Id>
+			<Message LcId="1031">Neuer Axioline Teilnehmer {0} hinzugefügt</Message>
+			<Message LcId="1033">New axioline module {0} added</Message>
+		</Event>
+		<Event>
+			<Id>3089</Id>
+			<Message LcId="1031">Axioline Teilnehmer {0} an falscher Position</Message>
+			<Message LcId="1033">Axioline module {0} at wrong position</Message>
+		</Event>
+		<Event>
+			<Id>3090</Id>
+			<Message LcId="1031">Axioline Teilnehmer {0} falsche Instanz</Message>
+			<Message LcId="1033">Axioline module {0} at wrong instance</Message>
+		</Event>
+		<Event>
+			<Id>3091</Id>
+			<Message LcId="1031">Axioline Teilnehmer {0} hat eine falsche Prozessdatenbreite</Message>
+			<Message LcId="1033">Axioline module {0} has wrong process data width</Message>
+		</Event>
+		<Event>
+			<Id>4675</Id>
+			<Message LcId="1031">Fehler beim einlesen des Axioline Bus</Message>
+			<Message LcId="1033">Error while getting axioline configuration</Message>
+		</Event>
+		<Event>
+			<Id>8496</Id>
+			<Message LcId="1031">Modul {0}: Kurzschluss Kanal {1}</Message>
+			<Message LcId="1033">Module {0}: Short circuit Channel {1}</Message>
+		</Event>
+		<Event>
+			<Id>8721</Id>
+			<Message LcId="1031">Modul {0}: Ueberlast eines Eingangs Gruppe {1}</Message>
+			<Message LcId="1033">Module {0}: Input overload Group {1}</Message>
+		</Event>
+		<Event>
+			<Id>9028</Id>
+			<Message LcId="1031">Modul {0}: Kurzschluss / Ueberlast eines Ausgangs</Message>
+			<Message LcId="1033">Module {0}: Short curcuit / output overload</Message>
+		</Event>
+		<Event>
+			<Id>13056</Id>
+			<Message LcId="1031">Modul {0}: Kurzschluss / Ueberlast eines Ausgangs</Message>
+			<Message LcId="1033">Module {0}: Short curcuit / output overload</Message>
+		</Event>
+		<Event>
+			<Id>13312</Id>
+			<Message LcId="1031">Modul {0}: Ausfall der Peripherieversorgung</Message>
+			<Message LcId="1033">Module {0}: I/O supply failure</Message>
+		</Event>
+		<Event>
+			<Id>13330</Id>
+			<Message LcId="1031">Modul {0}: Ausfall der Peripherieversorgung</Message>
+			<Message LcId="1033">Module {0}: I/O supply failure</Message>
+		</Event>
+		<Event>
+			<Id>13346</Id>
+			<Message LcId="1031">Modul {0}: Aktorversorgung fehlt</Message>
+			<Message LcId="1033">Module {0}: Actuator supply not present</Message>
+		</Event>
+		<Event>
+			<Id>20754</Id>
+			<Message LcId="1031">Modul {0}: Fehlerhafte 24V Versorgung</Message>
+			<Message LcId="1033">Module {0}: Faulty 24V supply</Message>
+		</Event>
+		<Event>
+			<Id>20755</Id>
+			<Message LcId="1031">Modul {0}: Fehlerhafte 5V Versorgung</Message>
+			<Message LcId="1033">Module {0}: Faulty 5V supply</Message>
+		</Event>
+		<Event>
+			<Id>20768</Id>
+			<Message LcId="1031">Modul {0}: Vergleichsstelle ungueltig Kanal {1}</Message>
+			<Message LcId="1033">Module {0}: Cold junction invalid Channel {1}</Message>
+		</Event>
+		<Event>
+			<Id>20832</Id>
+			<Message LcId="1031">Modul {0}: Versorgungsspannung fehlerhaft</Message>
+			<Message LcId="1033">Module {0}: Faulty supply voltage</Message>
+		</Event>
+		<Event>
+			<Id>24592</Id>
+			<Message LcId="1031">Geraeteneustart nach Watchdog</Message>
+			<Message LcId="1033">Device reset after watchdog</Message>
+		</Event>
+		<Event>
+			<Id>25345</Id>
+			<Message LcId="1031">Modul {0}: Geraetefehler</Message>
+			<Message LcId="1033">Module {0}: Device error</Message>
+		</Event>
+		<Event>
+			<Id>25346</Id>
+			<Message LcId="1031">Modul {0}: Flash-Format-Fehler</Message>
+			<Message LcId="1033">Module {0}: Flash format error</Message>
+		</Event>
+		<Event>
+			<Id>25376</Id>
+			<Message LcId="1031">Modul {0}: Parametertabelle ungueltig</Message>
+			<Message LcId="1033">Module {0}: Parameter table invalid</Message>
+		</Event>
+		<Event>
+			<Id>29440</Id>
+			<Message LcId="1031">Modul {0}: Geberfehler Kanal {1}</Message>
+			<Message LcId="1033">Module {0}: Encoder error Channel {1}</Message>
+		</Event>
+		<Event>
+			<Id>29445</Id>
+			<Message LcId="1031">Modul {0}: Geberfehler Kanal {1}</Message>
+			<Message LcId="1033">Module {0}: Encoder error Channel {1}</Message>
+		</Event>
+		<Event>
+			<Id>30224</Id>
+			<Message LcId="1031">Modul {0}: Empfangspuffer voll</Message>
+			<Message LcId="1033">Module {0}: Receive buffer full</Message>
+		</Event>
+		<Event>
+			<Id>30225</Id>
+			<Message LcId="1031">Modul {0}: Sendepuffer voll</Message>
+			<Message LcId="1033">Module {0}: Transmit buffer full</Message>
+		</Event>
+		<Event>
+			<Id>30240</Id>
+			<Message LcId="1031">Modul {0}: Geraetefehler</Message>
+			<Message LcId="1033">Module {0}: Device error</Message>
+		</Event>
+		<Event>
+			<Id>30480</Id>
+			<Message LcId="1031">Modul {0}: Drahtbruch Kanal {1}</Message>
+			<Message LcId="1033">Module {0}: Open circuit Channel {1}</Message>
+		</Event>
+		<Event>
+			<Id>34304</Id>
+			<Message LcId="1031">Modul {0}: Eingangsfehler Inkrementalwertgeber Kanal {1}</Message>
+			<Message LcId="1033">Module {0}: Input error of the incremental encoder Channel {1}</Message>
+		</Event>
+		<Event>
+			<Id>35088</Id>
+			<Message LcId="1031">Modul: {0} Bereichsueberschreitung Kanal {1}</Message>
+			<Message LcId="1033">Module: {0} Overrange Channel {1}</Message>
+		</Event>
+		<Event>
+			<Id>35104</Id>
+			<Message LcId="1031">Modul: {0} Bereichsunterschreitung Kanal {1}</Message>
+			<Message LcId="1033">Module: {0} Underrange Channel {1}</Message>
+		</Event>
+		<Event>
+			<Id>65281</Id>
+			<Message LcId="1031">Unterschied in der Axioline Modulkonfiguration bei Modul {0}</Message>
+			<Message LcId="1033">Axioline module configuration does not match at module {0}</Message>
+		</Event>
+		<Property>
+			<Name>DisplayTxtId</Name>
+			<Value>true</Value>
+		</Property>
+	</Source>
+</TcEventSources>
