@@ -2,18 +2,10 @@
 
 | **Requested by:** | **GHESA** |
 | --- | --- |
-| **Doc. Code / Version nº:** | --/1.1 |
+| **Doc. Code** | -- |
 | **Editor:** | Alberto Izpizua |
 | **Approved by:** | Julen García |
 
-
-
-## Document History
-
-|Version|Date|Editor|Comments|
-|--|--|--|--|
-|1.0|28/09/2022|A. Izpizua|Document Creation|
-|1.1|01/03/2023|A. Izpizua|Add info to check IO and Phase power supply EtherCAT line|
 
 ## Introduction
 
