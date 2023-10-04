@@ -46,7 +46,7 @@ Connections to test this line are:
 1. Remove the 221W1 cable from the 220A1 element
 2. Connect an Ethernet Cable between the Ethernet link of the computer labelled as Main port and the free port in the 220A1.
 
-![Phoenix contact port to remove cable](Figures/PhoenixHeader.jpg)
+![Phoenix contact port to remove cable](Figures/PhoenixHeader.jpg){width=40%}
 
 ### TwiCAT
 
