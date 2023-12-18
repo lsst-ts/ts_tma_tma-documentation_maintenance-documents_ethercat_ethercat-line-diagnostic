@@ -108,18 +108,18 @@ If the selected NIC is the Integrated Ethernet continue with step 5, otherwise m
     ![Most slaves in OP state, but one in PREOP](Figures/MostSlavesInOP.png)
 
     If all slaves are NOT in OP state, try next options:
+
     - Change to configuration mode (button next to the Run Mode) and then to run mode again.
     - Go to the slave that is not in OP mode in the Solution Explorer and click on it. Find the online view and manage the state machine of the slave with the buttons. To clear errors properly, it is best to put the slave in Init state.
 
     ![Slave online tab](Figures/SlaveOnlineTab.png)
-
 11. To display more diagnostics, select the EtherCAT master from the solution explorer (left side of the window) and go to EtherCAT tab. There Click on Advanced Settings….
 
     ![Advanced EtherCAT Configuration](Figures/AdvancedEthercatConfigurarion.png)
-
 12. Go to Diagnosis->Online View tab and select:
+
     - Select Show Change Counters (State Changes / Not Present).  Add the Changes column in the Online tab showing two counters separated by a slash. The first counter shows the number of abnormal state transitions. The second counter shows how often the communication with the slave device has been interrupted.
-    - In the blue box, shown in Figure 16, check next topics. Those should be counters in the slaves, but they depends on the slave implementation
+    - In the blue box, shown in next figure, check next topics. Those should be counters in the slaves, but they depends on the slave implementation
     - 300 ‘CRC A’. Byte 300 is Frame Error Counter port A and Byte 301 is Physical Layer Error Counter port A. Two bytes could also be a RX Error Counter for port A.
     - 302 ‘CRC B’. Byte 302 is Frame Error Counter port B and Byte 303 is Physical Layer Error Counter port B. Two bytes could also be a RX Error Counter for port B.
     - 304 ‘CRC C’. Byte 304 is Frame Error Counter port C and Byte 305 is Physical Layer Error Counter port C. Two bytes could also be a RX Error Counter for port C.
