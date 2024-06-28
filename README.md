@@ -148,7 +148,7 @@ To discover the modules and to work properly the ESI files for the Phase slaves 
 
 C:\TwinCAT\3.1\Config\Io\EtherCAT
 
-ESI files could be located in the "[https://gitlab.tekniker.es/aut/projects/3151-LSST/LabVIEWCode/PXIController.git](https://gitlab.tekniker.es/aut/projects/3151-LSST/LabVIEWCode/PXIController.git)" repository inside the "ESIFiles/Phoenix" and "ESIFiles/Phase/lsst_xml" folders.
+ESI files could be located in the [labview pxi controller](https://github.com/lsst-ts/ts_tma_labview_pxi-controller) repository inside the "ESIFiles/Phoenix" and "ESIFiles/Phase/lsst_xml" folders.
 
 ## ANNEX 2. BIOS configuration
 
