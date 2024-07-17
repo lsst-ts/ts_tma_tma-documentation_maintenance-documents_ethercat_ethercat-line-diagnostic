@@ -157,3 +157,16 @@ The Beckhoff master need to disable the virtualization in the BIOS. To access th
 ![Virtuzation suppoort in the BIOS](Figures/VirtualizationSupport.png)
 
 ![Disable Virtualization in the BIOS](Figures/BIOS_EnableVirtualization.png)
+
+## ANNEX 3. Error with network card
+
+Once happened that the network card was not letting get the system to run state, this was fixed by installing the card to be used as real time card.
+
+- Open the twincat project and go to the main device where the network card is selected
+- Open `Compatible Devices...`
+
+  ![image](https://github.com/user-attachments/assets/9527ec6d-c439-4f86-81c4-c4caf33e0d72)
+
+- Install the integrated card if not already, in this case it was in the list of compatible cards, but not in the `Installed and ready to use devices` list. By doing so it should look like this:
+
+  ![image](https://github.com/user-attachments/assets/b28f0684-c188-427d-81b0-c2218ecc12e6)
