@@ -10,9 +10,11 @@
 
 This repository has the documentation to diagnose the EtherCAT lines in the TMA. Also the TwinCAT solutions to perform the diagnose are included in the repository.
 
-In the "TwinCATProjects\PowerSupplyAndIOs\PowerSupplyAndIOs" folder is located the solution for Phase Power Supply and remote IOs EtherCAT line.
+In the "TwinCATProjects\PowerSupplyAndIOs\PowerSupplyAndIOs" folder is located the solution for Phase Power Supply and remote IOs EtherCAT line,
+[folder shortcut](https://github.com/lsst-ts/ts_tma_tma-documentation_maintenance-documents_ethercat_ethercat-line-diagnostic/tree/master/TwinCATProjects/PowerSupplyAndIOs/PowerSupplyAndIOs)
 
-In the "TwinCATProjects\PhaseDrivesEtherCATLineTesting" folder is located the solution for main axes drives EtherCAT line
+In the "TwinCATProjects\PhaseDrivesEtherCATLineTesting" folder is located the solution for main axes drives EtherCAT line,
+[folder shortcut](https://github.com/lsst-ts/ts_tma_tma-documentation_maintenance-documents_ethercat_ethercat-line-diagnostic/tree/master/TwinCATProjects/PhaseDrivesEtherCATLineTesting)
 
 This document shows a simple overview of the TwinCAT 3 tool used to diagnose the EtherCAT line. This document has not the intention to instruct any person on deep understanding of the TwinCAT 3 tool for any use. This document is only for reference of the work done in the EtherCAT line diagnosis.
 
