@@ -37,8 +37,10 @@ There are two options for the hardware connection depending if the diagnosis is 
 
 Connections to test this line are:
 
-1. Remove the cable, 10CS_205A, wired to the output of the cRIO, 201A1, located in the TMA-AZ-MCS-CBT-0001.
-2. Wire the 10CS_205A cable to the Ethernet link of the computer labelled as MainPort.
+1. Remove the blue cable, wired to the input of the cRIO, 201A1, located in the TMA-AZ-MCS-CBT-0001.
+2. Connect the Tekniker support PC's *MainPort* to the cRIO in.
+
+![alt text](Figures/DrivesEthercatLineStart_cRIO.png)
 
 #### Remote IOs and Phase Power supply EtherCAT line
 
