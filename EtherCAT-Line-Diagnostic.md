@@ -18,13 +18,6 @@ In the "TwinCATProjects\PhaseDrivesEtherCATLineTesting" folder is located the so
 
 This document shows a simple overview of the TwinCAT 3 tool used to diagnose the EtherCAT line. This document has not the intention to instruct any person on deep understanding of the TwinCAT 3 tool for any use. This document is only for reference of the work done in the EtherCAT line diagnosis.
 
-The described use, and the project used is only valid for the Phase Main Drives EtherCAT line. It is not valid for the secondary EtherCAT line, the one with the remote I/Os and the Power Supply.
-
-## Reference document list
-
-| No. | Document | Code | Version |
-| --- | -------- | ---- | ------- |
-
 ## Technical description
 
 ### Hardware connection
