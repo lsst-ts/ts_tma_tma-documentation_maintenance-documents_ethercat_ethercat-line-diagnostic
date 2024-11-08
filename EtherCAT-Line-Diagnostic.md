@@ -1,4 +1,4 @@
-# EtherCAT Line Diagnostic
+# EtherCAT Line Diagnostic and Recovery
 
 | **Requested by:** | **GHESA**       |
 | ----------------- | --------------- |
