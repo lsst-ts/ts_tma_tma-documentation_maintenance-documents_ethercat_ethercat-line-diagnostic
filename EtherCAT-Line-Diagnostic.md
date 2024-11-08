@@ -1,10 +1,10 @@
 # EtherCAT Line Diagnostic
 
-| **Requested by:** | **GHESA** |
-| ----------------------- | --------------- |
+| **Requested by:** | **GHESA**       |
+| ----------------- | --------------- |
 | **Doc. Code**     | --              |
 | **Editor:**       | Alberto Izpizua |
-| **Approved by:**  | Julen García   |
+| **Approved by:**  | Julen García    |
 
 ## Introduction
 
