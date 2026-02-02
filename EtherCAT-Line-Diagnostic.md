@@ -1,27 +1,22 @@
-# EtherCATLineDiagnostic
+# EtherCAT Line Diagnostic and Recovery
 
-| **Requested by:** | **GHESA** |
-| ----------------------- | --------------- |
+| **Requested by:** | **GHESA**       |
+| ----------------- | --------------- |
 | **Doc. Code**     | --              |
 | **Editor:**       | Alberto Izpizua |
-| **Approved by:**  | Julen García   |
+| **Approved by:**  | Julen García    |
 
 ## Introduction
 
 This repository has the documentation to diagnose the EtherCAT lines in the TMA. Also the TwinCAT solutions to perform the diagnose are included in the repository.
 
-In the "TwinCATProjects\PowerSupplyAndIOs\PowerSupplyAndIOs" folder is located the solution for Phase Power Supply and remote IOs EtherCAT line.
+In the "TwinCATProjects\PowerSupplyAndIOs\PowerSupplyAndIOs" folder is located the solution for *TMA PXI - Remote IOs and Phase Power supply - EtherCAT line*,
+[folder shortcut](https://github.com/lsst-ts/ts_tma_tma-documentation_maintenance-documents_ethercat_ethercat-line-diagnostic/tree/master/TwinCATProjects/PowerSupplyAndIOs/PowerSupplyAndIOs)
 
-In the "TwinCATProjects\PhaseDrivesEtherCATLineTesting" folder is located the solution for main axes drives EtherCAT line
+In the "TwinCATProjects\PhaseDrivesEtherCATLineTesting" folder is located the solution for *AXES PXI - Phase Drives - EtherCAT line*,
+[folder shortcut](https://github.com/lsst-ts/ts_tma_tma-documentation_maintenance-documents_ethercat_ethercat-line-diagnostic/tree/master/TwinCATProjects/PhaseDrivesEtherCATLineTesting)
 
 This document shows a simple overview of the TwinCAT 3 tool used to diagnose the EtherCAT line. This document has not the intention to instruct any person on deep understanding of the TwinCAT 3 tool for any use. This document is only for reference of the work done in the EtherCAT line diagnosis.
-
-The described use, and the project used is only valid for the Phase Main Drives EtherCAT line. It is not valid for the secondary EtherCAT line, the one with the remote I/Os and the Power Supply.
-
-## Reference document list
-
-| No. | Document | Code | Version |
-| --- | -------- | ---- | ------- |
 
 ## Technical description
 
@@ -31,21 +26,23 @@ To diagnose the EtherCAT line the windows computer sent by Tekniker for early va
 
 There are two options for the hardware connection depending if the diagnosis is going to be done in the drives line or the IOs and Phase Power supply line
 
-#### Drives EtherCAT line
+#### AXES PXI - Phase Drives - EtherCAT line
 
 Connections to test this line are:
 
-1. Remove the cable, 10CS_205A, wired to the output of the cRIO, 201A1, located in the TMA-AZ-MCS-CBT-0001.
-2. Wire the 10CS_205A cable to the Ethernet link of the computer labelled as MainPort.
+1. Remove the blue cable, wired to the input of the cRIO, 201A1, located in the TMA-AZ-MCS-CBT-0001.
+2. Connect the Tekniker support PC's *MainPort* to the cRIO in.
 
-#### Remote IOs and Phase Power supply EtherCAT line
+![alt text](Figures/DrivesEthercatLineStart_cRIO.png)
+
+#### TMA PXI - Remote IOs and Phase Power supply - EtherCAT line
 
 Connections to test this line are:
 
 1. Remove the 221W1 cable from the 220A1 element
 2. Connect an Ethernet Cable between the Ethernet link of the computer labelled as Main port and the free port in the 220A1.
 
-![Phoenix contact port to remove cable](Figures/PhoenixHeader.jpg){width=40%}
+![Phoenix contact port to remove cable](Figures/PhoenixHeader.jpg)
 
 ### TwiCAT
 
@@ -148,7 +145,7 @@ To discover the modules and to work properly the ESI files for the Phase slaves 
 
 C:\TwinCAT\3.1\Config\Io\EtherCAT
 
-ESI files could be located in the "[https://gitlab.tekniker.es/aut/projects/3151-LSST/LabVIEWCode/PXIController.git](https://gitlab.tekniker.es/aut/projects/3151-LSST/LabVIEWCode/PXIController.git)" repository inside the "ESIFiles/Phoenix" and "ESIFiles/Phase/lsst_xml" folders.
+ESI files could be located in the [labview pxi controller](https://github.com/lsst-ts/ts_tma_labview_pxi-controller) repository inside the "ESIFiles/Phoenix" and "ESIFiles/Phase/lsst_xml" folders.
 
 ## ANNEX 2. BIOS configuration
 
@@ -157,3 +154,16 @@ The Beckhoff master need to disable the virtualization in the BIOS. To access th
 ![Virtuzation suppoort in the BIOS](Figures/VirtualizationSupport.png)
 
 ![Disable Virtualization in the BIOS](Figures/BIOS_EnableVirtualization.png)
+
+## ANNEX 3. Error with network card
+
+Once happened that the network card was not letting get the system to run state, this was fixed by installing the card to be used as real time card.
+
+- Open the twincat project and go to the main device where the network card is selected
+- Open `Compatible Devices...`
+
+  ![image](https://github.com/user-attachments/assets/9527ec6d-c439-4f86-81c4-c4caf33e0d72)
+
+- Install the integrated card if not already, in this case it was in the list of compatible cards, but not in the `Installed and ready to use devices` list. By doing so it should look like this:
+
+  ![image](https://github.com/user-attachments/assets/b28f0684-c188-427d-81b0-c2218ecc12e6)
