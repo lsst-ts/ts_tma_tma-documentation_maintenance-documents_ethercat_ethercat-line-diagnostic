@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="SlaveInfo" Id="{95d4f1a5-a874-448a-b1af-706c0de3bf8f}">
+    <Declaration><![CDATA[TYPE SlaveInfo :
+STRUCT
+	Address 						: WORD;
+	Name 							: STRING[31];
+	ConfiguredVendorID				: UDINT;
+	ConfiguredProductCode 			: UDINT;
+	ConfiguredRevisionNo 			: UDINT;
+	ConfiguredSerialNo				: UDINT;
+	ReadVendorID					: UDINT;
+	ReadProductCode 				: UDINT;
+	ReadRevisionNo 					: UDINT;
+	ReadSerialNo					: UDINT;
+	CRCerrorCounter					: DWORD;
+	stCrcError						: ST_EcCrcErrorEx;
+	StateChanges					: UDINT;
+	StateChangesTimes				: ARRAY [0..255] OF TIMESTRUCT;
+	StateChangesIndex				: UINT;
+	AbnormalStateChanges			: UDINT;
+	AbnormalStateChangesTimes		: ARRAY [0..255] OF TIMESTRUCT;
+	AbnormalStateChangesIndex		: UINT;
+	
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

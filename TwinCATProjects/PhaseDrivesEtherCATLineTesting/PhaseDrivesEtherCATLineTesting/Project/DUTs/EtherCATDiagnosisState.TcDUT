@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="EtherCATDiagnosisState" Id="{2fa9f5f5-d261-410e-9b98-1b539e9a6ea9}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE EtherCATDiagnosisState :
+(
+	Init								:= 0,
+	GetPLCAdress						:= 1,
+	GetSlavesAddresses 					:= 2,
+	GetSlavesConfiguration 				:= 3,
+	ReadSlavesIdentity					:= 4,
+	
+	ReadSlaveCyclicData					:= 10,
+	
+	ProcessSlavesCyclicData				:= 100
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

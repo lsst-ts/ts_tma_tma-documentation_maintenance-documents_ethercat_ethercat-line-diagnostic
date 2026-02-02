@@ -5,13 +5,244 @@
 VAR
 	MyVar AT%I*:UDINT;
 	StatusWordDrive2 AT%I*:UINT;
+	
+	
+	b_PLCInitialization			: BOOL;
+	b_EtherCATMasterErrorRun	: BOOL;
+	
+	//fbEtherCatInit 			: FB_EtherCATInit;
+	
+	
+	
+	fbGetLocalAmsNetId		: FB_GetLocalAmsNetId;
+	sPlcNetId				: T_AmsNetId := '192.168.212.233.1.1';
+	sEcatMaterNetId       	: T_AmsNetId := '192.168.212.233.2.1';
+//	fbGetEcMasterState 		: FB_EcGetMasterState;
+	 fbGetAllEcSlaveStates 	: FB_EcGetAllSlaveStates;
+	 
+    bExecute            : BOOL := TRUE;
+    devStates           : ARRAY[0..EC_MAX_SLAVES] OF ST_EcSlaveState;
+    nSlaves             : UINT := 0;
+    bError              : BOOL;
+    nErrId              : UDINT;
+	
+	bFirstCall 					: BOOL := TRUE;
+	fbGetAllEcSlaveAddr 		: FB_EcGetAllSlaveAddr;
+	slaveAddresses    			: ARRAY[0..EC_MAX_SLAVES] OF UINT;    
+    bErrorSlaveAddr           	: BOOL;
+  
+	
+	i : UINT;
+	
+	fbGetSlaveIdentity : FB_EcGetSlaveIdentity;  
+    identity           : ARRAY [0..EC_MAX_SLAVES] OF ST_EcSlaveIdentity;
+	
+	fbEcGetConfSlaves : FB_EcGetConfSlaves;
+	ArrEcConfSlaveInfo : ARRAY[0..EC_MAX_SLAVES] OF ST_EcSlaveConfigData; 
+	
+	
+	fbEcGetAllSlavesStateChanges 	: FB_EcGetAllSlavePresentStateChanges;
+	ArrSlaveStateChangeBuff	  		:  ARRAY [0..EC_MAX_SLAVES] OF UDINT;
+	
+	fbEcGetAllSlavesCrcErrors			: FB_EcGetAllSlaveCrcErrors;
+	ArrSlavesCrcErrorCounterBuff	: ARRAY [0..EC_MAX_SLAVES] OF DWORD;
+	
+	fbEcGetSlaveCrcError		: FB_EcGetSlaveCrcError;
+	
+	fbEcGetAllSlaveAbnormalStateChanges	: FB_EcGetAllSlaveAbnormalStateChanges;
+	ArrSlavesAbnormalStateChanges		:  ARRAY [0..EC_MAX_SLAVES] OF UDINT; 
+    
+	fbGetTime : NT_GetTime;
+	
+   bBusy : BOOL;
+   
+   
+   arrSlaveData : ARRAY [0..EC_MAX_SLAVES] OF SlaveInfo;
+
+	
+	lastStateChangeValue: UDINT;
+	
+	eDiagnosisState : EtherCATDiagnosisState := EtherCATDiagnosisState.Init;
+	
 END_VAR
-]]></Declaration>
+
+VAR CONSTANT
+	EC_MAX_SLAVES : UINT :=255;
+END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[
+CASE eDiagnosisState OF
+	//Init the diagnosis
+	EtherCATDiagnosisState.Init:
+		bExecute := TRUE;
+		eDiagnosisState := EtherCATDiagnosisState.GetPLCAdress;
+		FOR i:= 0 TO EC_MAX_SLAVES DO
+			arrSlaveData[i].StateChangesIndex 			:= 0;
+			arrSlaveData[i].AbnormalStateChangesIndex 	:= 0;
+		END_FOR
+ 				
+	//Get PLC address
+	EtherCATDiagnosisState.GetPLCAdress:
+		fbGetLocalAmsNetId(bExecute:= bExecute);
+		bBusy := fbGetLocalAmsNetId.bBusy;
+		bError := fbGetLocalAmsNetId.bError;
+		IF NOT bBusy AND NOT bError AND bExecute THEN
+			sPlcNetId := fbGetLocalAmsNetId.AddrString;
+			eDiagnosisState := EtherCATDiagnosisState.GetSlavesAddresses;		
+		END_IF
+		
+		IF bError THEN
+			bExecute := FALSE;
+		ELSE
+			bExecute := TRUE;
+		END_IF
+		
+	//Get EtherCAT slaves addresses
+	EtherCATDiagnosisState.GetSlavesAddresses:
+		fbGetAllEcSlaveAddr(sNetId:= sEcatMaterNetId,pAddrBuf := ADR(slaveAddresses), cbBufLen:= SIZEOF(slaveAddresses), bExecute:=bExecute);
+		bBusy := fbGetAllEcSlaveAddr.bBusy;
+		bError := fbGetAllEcSlaveAddr.bError;
+		IF NOT bBusy AND NOT bError AND bExecute THEN
+			nSlaves := fbGetAllEcSlaveAddr.nSlaves;
+			FOR i:= 0 TO nSlaves-1 DO
+				arrSlaveData[i].Address	:= slaveAddresses[i];
+			END_FOR
+			eDiagnosisState := EtherCATDiagnosisState.GetSlavesConfiguration;		
+		END_IF
+		
+		IF bError THEN
+			bExecute := FALSE;
+		ELSE
+			bExecute := TRUE;
+		END_IF
+		
+	//Get salves configuration
+	EtherCATDiagnosisState.GetSlavesConfiguration:
+		fbEcGetConfSlaves(sNetId:= sEcatMaterNetId, pArrEcConfSlaveInfo:= ADR(ArrEcConfSlaveInfo), cbBufLen:= SIZEOF(ArrEcConfSlaveInfo), bExecute:= bExecute);
+		bBusy := fbEcGetConfSlaves.bBusy;
+		bError := fbEcGetConfSlaves.bError;
+		IF NOT bBusy AND NOT bError AND bExecute THEN			
+			FOR i:= 0 TO nSlaves-1 DO
+				arrSlaveData[i].ConfiguredProductCode	:= ArrEcConfSlaveInfo[i].stSlaveIdentity.productCode;
+				arrSlaveData[i].ConfiguredRevisionNo	:= ArrEcConfSlaveInfo[i].stSlaveIdentity.revisionNo;
+				arrSlaveData[i].ConfiguredSerialNo		:= ArrEcConfSlaveInfo[i].stSlaveIdentity.serialNo;
+				arrSlaveData[i].ConfiguredVendorID		:= ArrEcConfSlaveInfo[i].stSlaveIdentity.vendorId;
+				arrSlaveData[i].Name 					:= ArrEcConfSlaveInfo[i].sName;
+				arrSlaveData[i].Address					:= ArrEcConfSlaveInfo[i].nAddr;
+			END_FOR
+			eDiagnosisState := EtherCATDiagnosisState.ReadSlavesIdentity;
+			i := 0;		
+		END_IF
+		
+		IF bError THEN
+			bExecute := FALSE;
+		ELSE
+			bExecute := TRUE;
+		END_IF
+		
+	//Read salves identity
+	EtherCATDiagnosisState.ReadSlavesIdentity:
+		
+		fbGetSlaveIdentity(sNetId:= sEcatMaterNetId, nSlaveAddr:= arrSlaveData[i].Address, bExecute:=bExecute);
+		bBusy := fbEcGetConfSlaves.bBusy;
+		bError := fbEcGetConfSlaves.bError;
+		IF NOT bBusy AND NOT bError AND bExecute THEN			
+			arrSlaveData[i].ReadProductCode 		:= fbGetSlaveIdentity.identity.productCode;
+			arrSlaveData[i].ReadRevisionNo 			:= fbGetSlaveIdentity.identity.revisionNo;
+			arrSlaveData[i].ReadSerialNo 			:= fbGetSlaveIdentity.identity.serialNo;
+			arrSlaveData[i].ReadVendorID 			:= fbGetSlaveIdentity.identity.vendorId;
+			i := i+1;						
+		END_IF
+			
+		IF bError THEN
+			bExecute := FALSE;
+		ELSE
+			IF bBusy THEN
+				bExecute := TRUE;
+			ELSE
+				bExecute := NOT bExecute;
+			END_IF
+		END_IF
+		
+		IF i>=nSlaves THEN
+			eDiagnosisState := EtherCATDiagnosisState.ReadSlaveCyclicData;
+			bExecute 		:= TRUE;
+		END_IF
+		
+		
+	//read slaves cyclic data
+	EtherCATDiagnosisState.ReadSlaveCyclicData:
+		bError := FALSE;
+		bBusy  := FALSE;
+		fbGetAllEcSlaveStates(sNetId:= sEcatMaterNetId, pStateBuf := ADR(devStates), cbBufLen:=SIZEOF(devStates), bExecute:=bExecute);
+		bError := bError OR fbGetAllEcSlaveStates.bError;
+		bBusy := bBusy OR fbGetAllEcSlaveStates.bBusy;
+		
+		fbEcGetAllSlavesCrcErrors(sNetId:= sEcatMaterNetId, pCrcErrorBuf:= ADR(ArrSlavesCrcErrorCounterBuff), cbBufLen:= SIZEOF(ArrSlavesCrcErrorCounterBuff), bExecute:= bExecute);
+		bError := bError OR fbEcGetAllSlavesCrcErrors.bError;
+		bBusy := bBusy OR fbEcGetAllSlavesCrcErrors.bBusy;
+		
+		fbEcGetAllSlavesStateChanges(sNetId:= sEcatMaterNetId, pAddrBuf:= ADR(ArrSlaveStateChangeBuff), cbBufLen:= SIZEOF(ArrSlaveStateChangeBuff), bExecute:= bExecute);
+		bError := bError OR fbEcGetAllSlavesStateChanges.bError;
+		bBusy := bBusy OR fbEcGetAllSlavesStateChanges.bBusy;
+		
+		fbEcGetAllSlaveAbnormalStateChanges(sNetId:= sEcatMaterNetId, pAddrBuf:= ADR(ArrSlavesAbnormalStateChanges), cbBufLen:= SIZEOF(ArrSlavesAbnormalStateChanges), bExecute:= bExecute);
+		bError := bError OR fbEcGetAllSlaveAbnormalStateChanges.bError;
+		bBusy := bBusy OR fbEcGetAllSlaveAbnormalStateChanges.bBusy;
+
+		fbGetTime(NETID:=sPlcNetId, START:=bExecute);
+		
+		IF NOT bBusy AND NOT bError AND bExecute THEN
+			eDiagnosisState := EtherCATDiagnosisState.ProcessSlavesCyclicData;
+		END_IF
+		
+		IF bError THEN
+			bExecute := FALSE;
+		ELSE
+			bExecute := TRUE;
+		END_IF
+		
+		//Process salves cyclic data
+		EtherCATDiagnosisState.ProcessSlavesCyclicData:
+			FOR i:=0 TO nSlaves-1 DO
+				lastStateChangeValue 			:= arrSlaveData[i].StateChanges;
+				arrSlaveData[i].StateChanges 	:= ArrSlaveStateChangeBuff[i];
+				IF arrSlaveData[i].StateChanges <> lastStateChangeValue THEN					
+					arrSlaveData[i].StateChangesTimes[arrSlaveData[i].StateChangesIndex] := fbGetTime.TIMESTR; 
+					arrSlaveData[i].StateChangesIndex := arrSlaveData[i].StateChangesIndex + 1;					
+				END_IF		
+                lastStateChangeValue                    := arrSlaveData[i].AbnormalStateChanges;
+                arrSlaveData[i].AbnormalStateChanges 	:= ArrSlavesAbnormalStateChanges[i];
+                IF arrSlaveData[i].AbnormalStateChanges <> lastStateChangeValue THEN
+                    arrSlaveData[i].AbnormalStateChangesTimes[arrSlaveData[i].AbnormalStateChangesIndex] := fbGetTime.TIMESTR; 
+                    arrSlaveData[i].AbnormalStateChangesIndex := arrSlaveData[i].AbnormalStateChangesIndex + 1;
+                END_IF
+                arrSlaveData[i].CRCerrorCounter			:= ArrSlavesCrcErrorCounterBuff[i];
+            END_FOR
+            bExecute := FALSE;
+            eDiagnosisState := EtherCATDiagnosisState.ReadSlaveCyclicData;
+		ELSE
+			bExecute := FALSE;
+		
+END_CASE]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="2" Count="0" />
+      <LineId Id="653" Count="6" />
+      <LineId Id="870" Count="0" />
+      <LineId Id="872" Count="0" />
+      <LineId Id="871" Count="0" />
+      <LineId Id="869" Count="0" />
+      <LineId Id="662" Count="49" />
+      <LineId Id="940" Count="0" />
+      <LineId Id="712" Count="10" />
+      <LineId Id="724" Count="20" />
+      <LineId Id="941" Count="1" />
+      <LineId Id="1012" Count="0" />
+      <LineId Id="944" Count="0" />
+      <LineId Id="745" Count="52" />
+      <LineId Id="866" Count="1" />
+      <LineId Id="798" Count="0" />
+      <LineId Id="45" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

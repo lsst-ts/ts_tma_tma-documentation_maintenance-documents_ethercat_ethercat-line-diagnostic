@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_EtherCATInit" Id="{cb1e3313-5780-402d-95c8-e73e952009a0}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_EtherCATInit
+VAR_INPUT
+	iADSAmsNetId : ARRAY[0..5] OF BYTE;
+END_VAR
+VAR_OUTPUT	
+	oPLCInicialization		: BOOL; 		// PLC Initiliation OK
+	oECatMasterError 		: BOOL;		// MasterECat Error
+	oSlavesECatError 		: BOOL;		// Slaves State Error NOT OP
+	oErrorPLCInicialization : INT; // Error ID
+	oDeviceECATNoInit		:ST_InfoEtherCATSlaves; // EtherCAT slave Not Init
+END_VAR
+
+VAR_IN_OUT
+	ioFirstCyclePlc : BOOL;
+END_VAR
+	
+VAR
+	arSlavesData : ARRAY[0..nNumberSlaves] OF ST_InfoEtherCATSlaves;	(* Struct to save data read*)
+	bExecute1 : BOOL; 										(* Function Execute Signal*)
+	FBReadSlaves: FB_ReadSlavesEherCAT; 					(* Function to read EherCAT Slaves*)
+		
+	InitNo				:INT:=0;		// 0 para realizar la inicialización Ó 5 para no chequear hw
+	bExecute			:BOOL;
+	bUsersLoaded		:BOOL:=FALSE;
+	i					:INT;
+	
+	FBEcGetMasterState:FB_EcGetMasterState;
+	FBEcSetMasterState:FB_EcSetMasterState;
+
+END_VAR
+
+VAR CONSTANT
+	nNumberSlaves : INT := 14;
+END_VAR
+
+VAR PERSISTENT
+	(* READ ONLY: TRUE when all PLC variables are updated with database info *)
+	bDataReady_out : BOOL := FALSE;
+	(* READ ONLY: 0 when no errors happened and >0 otherwise *)
+	nDataErrors_out : UINT := 0;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// PLC Inicialization
+CASE InitNo OF
+	0:	// Get ADSAmsNetId
+		PLCEtherCatAddress:=F_CreateAmsNetId(nIds:=iADSAmsNetId);
+		IF PLCEtherCatAddress <> '' 
+		THEN 
+			InitNo:=1;	//	Next Step
+		END_IF;
+		
+	1:	//Get Status 
+		bExecute:= NOT bExecute;
+		FBEcGetMasterState(
+			sNetId:=PLCEtherCatAddress,
+			bExecute:=bExecute,
+			tTimeout:=t#10s,
+			bBusy=> ,
+			bError=> ,
+			nErrId=> ,
+			state=> );
+
+		IF FBEcGetMasterState.state=8 
+		THEN 
+			InitNo:=3;	//	Next Step
+			FBEcGetMasterState(bExecute:=FALSE );
+		ELSIF FBEcGetMasterState.state=1 
+		THEN 
+			InitNo:=2;	//	Set Status
+			FBEcGetMasterState(bExecute:=FALSE );
+		END_IF
+		
+		IF FBEcGetMasterState.bError 
+		THEN
+			InitNo:= 7;					// Initialization_Error
+			oECatMasterError:=TRUE;	// EtherCAT Master Error
+		END_IF
+
+	2:	// Set Status 8 if does not work, NOT OP
+		FBEcSetMasterState(
+			sNetId:=PLCEtherCatAddress,
+			bExecute:= TRUE,
+			tTimeout:= t#10s,
+			reqState:=8 ,
+			bBusy=> ,
+			bError=> ,
+			nErrId=> ,
+			currState=> );
+
+		bExecute:= NOT bExecute;
+
+		FBEcGetMasterState(
+			sNetId:=PLCEtherCatAddress,
+			bExecute:=bExecute,
+			tTimeout:=t#10s,
+			bBusy=> ,
+			bError=> ,
+			nErrId=> , 
+			state=> );
+		
+		IF FBEcGetMasterState.bError OR FBEcSetMasterState.bError 
+		THEN
+			InitNo:=7;						// Initialization_Error
+			oECatMasterError := TRUE;		// EtherCAT Master Error
+			oErrorPLCInicialization := 1;
+		END_IF; 
+		
+		IF FBEcGetMasterState.state=8 
+		THEN 
+			InitNo:=3;	//	Next Step
+		END_IF
+
+		InitNo:=3;	//	Next Step
+		
+	3:	// Get Status of EtherCAT Slaves
+		FBReadSlaves(sNetID:=PLCEtherCatAddress ,
+					 pArray:= ADR(arSlavesData), 
+					 nSizeStruct:=SIZEOF(arSlavesData),
+					 bExecute:= ioFirstCyclePlc) ;
+		IF NOT FBReadSlaves.bBusy 
+		THEN
+			IF FBReadSlaves.bDone
+			THEN
+				InitNo:=4;	//	Next Step
+			ELSIF FBReadSlaves.bError 
+			THEN
+				InitNo:=7; // Not initialization
+				InitNo:=4;
+			END_IF
+		END_IF
+			
+	4:	// Check the Status of Slaves		
+		FOR i:=0 TO nNumberSlaves-1 DO
+			IF arSlavesData[i].enState <> Operational_State AND NOT oSlavesECatError
+			THEN
+				oSlavesECatError := TRUE;
+				oDeviceECATNoInit	:=	arSlavesData[i];	//Save the Slave with Error
+			END_IF
+		END_FOR
+		IF oSlavesECatError
+		THEN			
+			InitNo:=7;
+			oErrorPLCInicialization := 3;		//Error in Parameters Load
+		ELSE
+			InitNo:=6;	//	No Error
+		END_IF	
+
+	6:
+		ioFirstCyclePlc := FALSE;  		// End Initialization
+		oPLCInicialization:=TRUE; 		// PLC Initiliation OK
+		oECatMasterError:=FALSE;		// MasterECat Error
+		oSlavesECatError:=FALSE;		// Slaves State Error NOT OP
+		
+	7:
+		ioFirstCyclePlc := FALSE;		// End Initialization
+		oPLCInicialization:=FALSE;		// PLC Initiliation  NO OK
+		
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="FB_EtherCATInit">
+      <LineId Id="3" Count="114" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

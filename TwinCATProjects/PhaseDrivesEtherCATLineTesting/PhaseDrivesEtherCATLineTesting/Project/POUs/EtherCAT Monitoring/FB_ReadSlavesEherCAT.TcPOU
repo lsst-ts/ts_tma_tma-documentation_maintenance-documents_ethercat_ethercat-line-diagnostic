@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_ReadSlavesEherCAT" Id="{3d69e986-267f-4a68-aea2-94e5d7b134ad}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ReadSlavesEherCAT
+VAR_INPUT
+	bExecute:BOOL; (*Execute*)
+	sNetID: T_AmsNetId; (*AMS Address of EtherCAT Master*)
+	pArray: POINTER TO ARRAY[0..iNumberSlaves] OF st_InfoEtherCATSlaves; (*(14 number of slaves)A pointer to the memory address where the data stored start*)
+	nSizeStruct: UDINT; (*Bytes number to modify in the reading*)
+END_VAR
+VAR_OUTPUT
+	bError: BOOL:= FALSE; 	(* Error Reading the slaves*)
+	bDone : BOOL := FALSE;	(* Finished reading the slaves*)
+	bBusy : BOOL := FALSE; 	(* Function busy*)
+	nErrorID: UINT:=0; 		(* State where the error occurs *)
+	nEtherCATSlaves : UINT := 0; (*number of EtherCAT Slaves*)
+END_VAR
+VAR
+	stLocalInfoEtherCATSlave : st_InfoEtherCATSlaves; (*Current data of slave*)
+	nEstado: UINT:=0; (*Current value of State Machine*)
+	nIndex: UINT (*Number of slaves reading at the moment*);
+	RisingEdge:R_TRIG; 
+	nSlaves: UINT :=0; (*Number of slaves EtherCAT detected*)
+	fbGetSlaveCount : FB_EcGetSlaveCount; (*Reading slave Function*)
+	tTimeout	: TIME := DEFAULT_ADS_TIMEOUT; (*Maximum time to execute the reader function of slaves*)
+	(*Variables to read the NAMES*)
+	stLocalInfo: ST_EcSlaveConfigData; (*Aux variable to save the NAME and ADDRESS of the slaves*)
+	fbAdsRead: ADSREAD; (*Reading function to get slaves data*)
+	nIdxOffs: UDINT; (*Offset to indicate wich slave to get data*)
+	(*Constant to calculate the offset*)
+	nSDO_IDX_SBP_SLAVECONFIGDATASTART : DWORD := 16#00_00_80_00;
+	nADSIOFFS_ECAT_COE_COMPLETEACCESS : DWORD := 16#00_00_01_00;
+	(*Variable to CRC*)
+	fbGetSlaveCrcError : FB_EcGetSlaveCrcError; (*CRC Reader function of a slave*)
+	(*Variable to read States of slaves*)
+	fbGetSlaveState: FB_EcGetSlaveState;  (*Reader function to get de operation state and connection of a slaves*)
+END_VAR
+
+VAR CONSTANT
+	iNumberSlaves : INT := 19;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE nEstado OF
+	0:      
+		RisingEdge( CLK:= bExecute );
+		(*Initialization of variables *)
+		IF RisingEdge.Q 
+		THEN
+			bBusy 		:= TRUE;
+			bError 		:= FALSE;
+			bDone		:= FALSE;
+			nErrorId 	:= 0;
+			nSlaves		:= 0;
+			MEMSET( pArray, 0, nSizeStruct ); (*Delete old information of EtherCAT Slaves*)
+			nEstado		:= 10;
+			nIndex 		:=	1;
+		END_IF
+
+	10:    (*Get the counter of slaves connected*)
+		fbGetSlaveCount(sNetId:= sNetId, 
+						bExecute:=TRUE);
+		nSlaves:=fbGetSlaveCount.nSlaves;
+
+		(*Reading finished and all is OK *)
+		IF NOT fbGetSlaveCount.bBusy AND NOT fbGetSlaveCount.bError 
+		THEN
+			(*Check that any slave is connected, if not finish*)
+			IF nSlaves = 0 
+			THEN
+				nEstado:=11;
+				nIndex :=0; (* Set this value to out in State 60*)
+				fbGetSlaveCount(sNetId:= sNetId, bExecute:=FALSE);
+			(*Any slave connected*)
+			ELSE
+				nEstado:=20;
+				fbGetSlaveCount(sNetId:= sNetId, 
+								bExecute:=FALSE);
+			END_IF
+		END_IF
+
+		(*GetSlave Error -- go to State 50*)
+		IF fbGetSlaveCount.bError 
+		THEN
+			fbGetSlaveCount(sNetId:= sNetId, bExecute:=FALSE);
+			bError		:=TRUE;
+			bBusy		:=FALSE;
+			nErrorID	:=nEstado;
+			bDone		:=FALSE;
+			nEstado		:=0;
+		END_IF
+
+	11:	(*No EtherCAT slave detected*)
+		bError		:= TRUE;
+		bBusy		:= FALSE;
+		nErrorID	:= nEstado;
+		bDone		:= FALSE;
+		nEstado		:= 0;
+
+	20:    (*Name and Address of slaves*)
+		nIdxOffs := SHL(nSDO_IDX_SBP_SLAVECONFIGDATASTART+(nIndex-1),16) OR nADSIOFFS_ECAT_COE_COMPLETEACCESS; (*Calculate the offset to indicate the slave to ask for information*)
+		fbAdsRead(NETID:= sNetId,PORT:= EC_AMSPORT_MASTER,IDXGRP:= EC_ADS_IGRP_CANOPEN_SDO,IDXOFFS:= nIdxOffs,LEN:= SIZEOF(stLocalInfo),DESTADDR:= ADR(stLocalInfo),	READ:= TRUE,TMOUT:= tTimeout);
+
+		(*Finish the reading and all is OK, go to Next State *)
+		IF NOT fbAdsRead.Busy AND NOT fbAdsRead.Err 
+		THEN
+			stLocalInfoEtherCATSlave.nAddress:=stLocalInfo.nAddr;
+			stLocalInfoEtherCATSlave.sName:=stLocalInfo.sName;
+			nEstado:=30;
+			fbAdsRead( READ := FALSE );
+		END_IF
+
+		(*Any error in Reading, go to State 50*)
+		IF fbAdsRead.Err 
+		THEN
+			stLocalInfoEtherCATSlave.nErrorLectura := nEstado;
+			nEstado:=50;
+			fbAdsRead( READ := FALSE );
+		END_IF
+
+	30:    (*Reading CRCs of slaves*)
+		fbGetSlaveCrcError(sNetId:= sNetId, 
+						   nSlaveAddr:= stLocalInfo.nAddr, 
+						   bExecute:=TRUE);
+
+		(*Finish the reading and all is OK, go to Next State *)
+		IF NOT fbGetSlaveCrcError.bBusy AND NOT fbGetSlaveCrcError.bError 
+		THEN
+			stLocalInfoEtherCATSlave.dwCRC:=(fbGetSlaveCrcError.crcError.portA+fbGetSlaveCrcError.crcError.portB+fbGetSlaveCrcError.crcError.portC); (*El CRC que devuelve es la suma del CRC de cada puerto*)
+			nEstado:=40;
+			fbGetSlaveCrcError(bExecute:=FALSE);
+		END_IF
+
+		(*Any error in REading, go to State 50*)
+		IF fbGetSlaveCrcError.bError 
+		THEN
+			stLocalInfoEtherCATSlave.nErrorLectura := nEstado;
+			nEstado:=50;
+			fbGetSlaveCrcError(bExecute:=FALSE);
+		END_IF
+
+	40:   (*Reading state of the slaves*)
+		fbGetSlaveState(sNetId:= sNetId, nSlaveAddr:= stLocalInfo.nAddr, bExecute:=TRUE);
+
+		(*Finish the reading and all is OK, go to Next State *)
+		IF NOT fbGetSlaveState.bBusy AND NOT fbGetSlaveState.bError 
+		THEN
+			stLocalInfoEtherCATSlave.nLink:=fbGetSlaveState.state.linkState;
+			stLocalInfoEtherCATSlave.enState:=fbGetSlaveState.state.deviceState;
+			stLocalInfoEtherCATSlave.bErrorLectura:=FALSE; (*to be in this point mean all data read correctly*)
+			stLocalInfoEtherCATSlave.nErrorLectura := 0;
+			nEstado:=60;
+			fbGetSlaveState(bExecute:=FALSE);
+		END_IF
+
+		(*Any error in REading, go to State 50*)
+		IF fbGetSlaveState.bError 
+		THEN
+			stLocalInfoEtherCATSlave.nErrorLectura := nEstado;
+			nEstado:=50;
+			fbGetSlaveState(bExecute:=FALSE);
+		END_IF
+
+	50:    (*Any Error in Reading*)
+		stLocalInfoEtherCATSlave.bErrorLectura:=TRUE;
+		nEstado :=60;
+
+	60:   (*Write in out memory*)
+		(*Any slave was detedted*)
+		IF nSlaves > 0 
+		THEN
+			MEMCPY(pArray + UINT_TO_UDINT(nIndex-1)*SIZEOF(stLocalInfoEtherCATSlave), ADR(stLocalInfoEtherCATSlave), SIZEOF(stLocalInfoEtherCATSlave));
+		END_IF
+		(*All slaves indicated are read, go to initial state*)
+		IF nIndex = nSizeStruct/SIZEOF(stLocalInfoEtherCATSlave) OR nIndex = nSlaves 
+		THEN
+			nEstado := 0;
+			bDone := TRUE;
+			bBusy := FALSE;
+			bError := FALSE;
+			nEtherCATSlaves := nSlaves;
+		(*More slaves to read, go to State 20 to read the next*)
+		ELSE
+			nEstado := 20;
+			nIndex := nIndex + 1;
+		END_IF
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="FB_ReadSlavesEherCAT">
+      <LineId Id="3" Count="142" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="SIC_Diagnosis_Modules" Id="{8a71995c-ece4-418e-afd6-5dd6c4a6a300}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM SIC_Diagnosis_Modules
+VAR
+	(**********************************************************)
+	(* 					EtherCAT Master						  *)
+	(**********************************************************)
+//	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^InfoData^AmsNetId'}
+//	ADSAmsNetId	AT %I* : ARRAY[0..5] OF BYTE;
+	
+	
+
+	// EtheCAT Diagnosis
+	bExe							: BOOL;
+	FBEcGetMasterState				: FB_EcGetMasterState;
+	FB_EcMasterFrameStatistic 		: FB_EcMasterFrameStatistic;
+	bExecute						: BOOL;
+	
+	// 1. Bus Coupler 1 
+	FBDiagnosis_201KF11		:	FB_Diag_ECAT_Module();
+	FBDiagnosis_201KF21		:	FB_Diag_ECAT_Module();
+	FBDiagnosis_201KF22		:	FB_Diag_ECAT_Module();
+	FBDiagnosis_201KF23		:	FB_Diag_ECAT_Module();
+	FBDiagnosis_201KF31		:	FB_Diag_ECAT_Module();
+	FBDiagnosis_201KF41		:	FB_Diag_ECAT_Module();
+	FBDiagnosis_201KF42		:	FB_Diag_ECAT_Module();
+	FBDiagnosis_201KF43		:	FB_Diag_ECAT_Module();
+	FBDiagnosis_201KF51		:	FB_Diag_ECAT_Module();
+	FBDiagnosis_201KF61		:	FB_Diag_ECAT_Module();
+	FBDiagnosis_201KF62		:	FB_Diag_ECAT_Module();
+	FBDiagnosis_201KF71		:	FB_Diag_ECAT_Module();
+	FBDiagnosis_201KF72		:	FB_Diag_ECAT_Module();
+	FBDiagnosis_201KF81		:	FB_Diag_ECAT_Module();
+	FBDiagnosis_201KF91		:	FB_Diag_ECAT_Module();	
+	FBDiagnosis_101TB1		:	FB_Diag_ECAT_Module();
+	FBDiagnosis_101TB2		:	FB_Diag_ECAT_Module();
+	FBDiagnosis_101TB3		:	FB_Diag_ECAT_Module();
+	FBDiagnosis_101TB4		:	FB_Diag_ECAT_Module();	
+	
+	// Bus Coupler 1
+	// -201KF11
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^InfoData^State'}	
+	ui201BC1State	AT	%I*:	UINT;	// State 
+	
+	// -201KF21
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF21 (EL1008)^WcState^WcState'}
+	b201DI1Wc			AT	%I*:	BOOL;	// Working Counter
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF21 (EL1008)^InfoData^State'}
+	ui201DI1State		AT	%I*:	UINT;	// State
+	
+	// -201KF22
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF22 (EL1008)^WcState^WcState'}
+	b201DI2Wc			AT	%I*:	BOOL;	// Working Counter
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF22 (EL1008)^InfoData^State'}
+	ui201DI2State		AT	%I*:	UINT;	// State
+	
+	// -201KF23
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF23 (EL1008)^WcState^WcState'}
+	b201DI3Wc			AT	%I*:	BOOL;	// Working Counter
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF23 (EL1008)^InfoData^State'}
+	ui201DI3State		AT	%I*:	UINT;	// State
+	
+	// -201KF31
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF31 (EL3062)^WcState^WcState'}
+	b201DAI1Wc			AT	%I*:	BOOL;	// Working Counter
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF31 (EL3062)^InfoData^State'}
+	ui201AI1State		AT	%I*:	UINT;	// State
+	
+	// -201KF41
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF41 (EL1904)^WcState^WcStateIn'}
+	b201SI2Wc			AT	%I*:	BOOL;	// Working Counter
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF41 (EL1904)^InfoData^State'}
+	ui201SI2State		AT	%I*:	UINT;	// State
+	
+	// -201KF42
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF42 (EL1904)^WcState^WcStateIn'}
+	b201SI3Wc			AT	%I*:	BOOL;	// Working Counter
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF42 (EL1904)^InfoData^State'}
+	ui201SI3State		AT	%I*:	UINT;	// State
+	
+	// -201KF43
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF43 (EL1904)^WcState^WcStateIn'}
+	b201SI4Wc			AT	%I*:	BOOL;	// Working Counter
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF43 (EL1904)^InfoData^State'}
+	ui201SI4State		AT	%I*:	UINT;	// State
+	
+	// -201KF51
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF51 (EL6910)^WcState^WcStateIn'}
+	b201SI1Wc			AT	%I*:	BOOL;	// Working Counter
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF51 (EL6910)^InfoData^State'}
+	ui201SI1State		AT	%I*:	UINT;	// State
+	
+	// -201KF61
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF61 (EL2008-0015)^WcState^WcState'}
+	b201DO1Wc			AT	%I*:	BOOL;	// Working Counter
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF61 (EL2008-0015)^InfoData^State'}
+	ui201DO1State		AT	%I*:	UINT;	// State
+	
+	// -201KF62
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF62 (EL2068)^WcState^WcStateIn'}
+	b201DO2Wc			AT	%I*:	BOOL;	// Working Counter
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF62 (EL2068)^InfoData^State'}
+	ui201DO2State		AT	%I*:	UINT;	// State
+	
+	// -201KF71
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF71 (EL2904)^WcState^WcStateIn'}
+	b201SO1Wc			AT	%I*:	BOOL;	// Working Counter
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF71 (EL2904)^InfoData^State'}
+	ui201SO1State		AT	%I*:	UINT;	// State
+	
+	// -201KF72
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF72 (EL2904)^WcState^WcStateIn'}
+	b201SO2Wc			AT	%I*:	BOOL;	// Working Counter
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF72 (EL2904)^InfoData^State'}
+	ui201SO2State		AT	%I*:	UINT;	// State	
+	
+	// -201KF81
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF81 (EL9410)^WcState^WcState'}
+	b201ST1Wc			AT	%I*:	BOOL;	// Working Counter
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF81 (EL9410)^InfoData^State'}
+	ui201ST1State		AT	%I*:	UINT;	// State
+	
+	// -201KF91
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF91 (EL6631)^WcState^WcStateIn'}
+	b201CO1Wc			AT	%I*:	BOOL;	// Working Counter
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-201KF11 (EK1100)^-201KF91 (EL6631)^InfoData^State'}
+	ui201CO1State		AT	%I*:	UINT;	// State
+	
+	// -101TB1
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-101TB1 (AX5201-0000-0214)^InfoData^State'}
+	ui101U1State		AT	%I*:	UINT;	// State
+	
+	// -101TB2
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-101TB2 (AX5201-0000-0214)^InfoData^State'}
+	ui101U2State		AT	%I*:	UINT;	// State
+	
+	// -101TB3
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-101TB3 (AX5203-0000-0214)^InfoData^State'}
+	ui101U3State		AT	%I*:	UINT;	// State
+	
+	// -101TB4
+	{attribute 'TcLinkTo' := 'TIID^EtherCAT_Master (EtherCAT)^-101TB4 (AX5203-0000-0214)^InfoData^State'}
+	ui101U4State		AT	%I*:	UINT;	// State
+	
+	
+
+	
+	
+
+	
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*************** ETHERCAT DIAGNOSIS ************************************)
+(* 1. EtherCAT Master State *)
+bExe := NOT bExe;
+FBEcGetMasterState(
+			sNetId:=PLCEtherCatAddress,
+			bExecute:=bExe,
+			tTimeout:=t#10s,
+			bBusy=> ,
+			bError=> ,
+			nErrId=> ,
+			state=> );
+			
+b_EtherCATMasterErrorRun := b_PLCInitialization AND (FBEcGetMasterState.state <> 8);
+
+(* State of the EtherCAT Frames *)
+IF FBEcGetMasterState.state = 8 AND b_Pulse_1sec
+THEN
+	bExecute:= NOT bExecute;
+	FB_EcMasterFrameStatistic(sNetId := PLCEtherCatAddress,
+							  bExecute := bExecute);
+END_IF
+EtherCATMaster.udiLostFrames				:= FB_EcMasterFrameStatistic.nLostFrames;
+EtherCATMaster.lrfFramesPerSecond			:= FB_EcMasterFrameStatistic.fFramesPerSecond;
+EtherCATMaster.udinLostQueuedFrames			:= FB_EcMasterFrameStatistic.nLostQueuedFrames;
+EtherCATMaster.lrfQueuedFramesPerSencond	:= FB_EcMasterFrameStatistic.fQueuedFramesPerSecond;
+
+(*************** DIAGNOSIS OF ETHERCAT MODULES ********************)
+(* -201 *)
+FBDiagnosis_201KF11(bWCounter := FALSE,
+				   wState := ui201BC1State,
+				   TimeError :=Time100ms,
+				   bError=> b_201BC1Error);
+				   
+FBDiagnosis_201KF21(bWCounter := FALSE,
+				   wState := ui201BC1State,
+				   TimeError :=Time100ms,
+				   bError=> b_201DI1Error);
+				   
+FBDiagnosis_201KF22(bWCounter := FALSE,
+				   wState := ui201DI2State,
+				   TimeError :=Time100ms,
+				   bError=> b_201DI2Error);
+				   
+FBDiagnosis_201KF23(bWCounter := FALSE,
+				   wState := ui201DI3State,
+				   TimeError :=Time100ms,				   
+				   bError=> b_201DI3Error);
+				   
+FBDiagnosis_201KF31(bWCounter := FALSE,
+				   wState := ui201AI1State,
+				   TimeError :=Time100ms,
+				   bError=> b_201AI1Error);
+
+FBDiagnosis_201KF42(bWCounter := FALSE,
+				   wState := ui201SI2State,
+				   TimeError :=Time100ms,
+				   bError=> b_201SI2Error);
+
+FBDiagnosis_201KF43(bWCounter := FALSE,
+				   wState := ui201SI3State,
+				   TimeError :=Time100ms,
+				   bError=> b_201SI3Error);
+
+FBDiagnosis_201KF51(bWCounter := FALSE,
+				   wState := ui201SI4State,
+				   TimeError :=Time100ms,
+				   bError=> b_201SI4Error);
+
+FBDiagnosis_201KF41(bWCounter := FALSE,
+				   wState := ui201SI1State,
+				   TimeError :=Time100ms,
+				   bError=> b_201SI1Error);
+
+FBDiagnosis_201KF61(bWCounter := FALSE,
+				   wState := ui201DO1State,
+				   TimeError :=Time100ms,
+				   bError=> b_201DO1Error);
+
+FBDiagnosis_201KF62(bWCounter := FALSE,
+				   wState := ui201DO2State,
+				   TimeError :=Time100ms,
+				   bError=> b_201DO2Error);
+
+FBDiagnosis_201KF71(bWCounter := FALSE,
+				   wState := ui201SO1State,
+				   TimeError :=Time100ms,
+				   bError=> b_201SO1Error);
+				   
+FBDiagnosis_201KF72(bWCounter := FALSE,
+				   wState := ui201SO2State,
+				   TimeError :=Time100ms,
+				   bError=> b_201SO2Error);
+
+FBDiagnosis_201KF81(bWCounter := FALSE,
+				   wState := ui201ST1State,
+				   TimeError :=Time100ms,
+				   bError=> b_201ST1Error);
+
+FBDiagnosis_201KF91(bWCounter := FALSE,
+				   wState := ui201CO1State,
+				   TimeError :=Time100ms,
+				   bError=> b_201CO1Error);
+				   
+// Drives
+FBDiagnosis_101TB1(bWCounter := FALSE,
+				   wState := ui101U1State,
+				   TimeError :=Time100ms,
+				   bError=> b_101U1Error);
+FBDiagnosis_101TB2(bWCounter := FALSE,
+				   wState := ui101U2State,
+				   TimeError :=Time100ms,
+				   bError=> b_101U1Error);
+FBDiagnosis_101TB3(bWCounter := FALSE,
+				   wState := ui101U3State,
+				   TimeError :=Time100ms,
+				   bError=> b_101U1Error);
+FBDiagnosis_101TB4(bWCounter := FALSE,
+				   wState := ui101U4State,
+				   TimeError :=Time100ms,
+				   bError=> b_101U1Error);				   
+				   
+(*************** PROFINet DIAGNOSIS ************************************)
+// 1. AMT
+// 0 = No error
+// 1 = Profinet device state machine is in boot mode
+// 2 = Device not found
+// 3 = The stationname is not unique
+// 4 = IP could not be set
+// 5 = IP conflict
+// 6 = DCP set was not successful
+// 7 = Watchdog error
+// 8 = Datahold error
+// 9 = RTC3: Sync mode could not be initiated
+// 10 = Profinet controller has a link error
+// 11 = The aliasname is not unique
+// 12 = The automatic name assignement isn't possible - wrong device type
+// 13 = IOC-AR is established but no application ready
+// 14 = IOC-AR is established but module difference
+// 15 = At least one InputCR is invalid, provider in stop or problemindicator is set
+// 16 = At least one OutputCR is invalid, provider in stop or problemindicator is set
+// 31 = Only for EtherCAT gateways: WC-State of cyclic EtherCAT frame is 1
+b_ProfinetAMTError := (PnIoBoxState <> 0);
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="SIC_Diagnosis_Modules">
+      <LineId Id="3" Count="142" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -2,9 +2,9 @@
 <TcLicenseInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2011/11/TcLicenseInfo">
 	<LicenseInfo>
 		<SystemId>{B957705F-34E8-4894-471F-B711734E7489}</SystemId>
-		<IssueTime>2022-10-26T00:43:00</IssueTime>
-		<ExpireTime>2022-11-03T00:00:00</ExpireTime>
-		<LicenseKey>cd27a2fa8f62af6619f95c9f0bc921586c3b9b627c52949e3d7f969ebd28c1e6d9a85fec1524a70121a56158b9ff93ab9234a60ac66b23a976d515b37cda40e823dbefc0b8f5315db4f5ad634c715f7dbfdb8f536006742d386524137c6f6091bcbe744b1324b208e75918b4f665692baa43483203575ac7ce7ce2b82fbf4dc66d2801b29cebef4cc3ce0a67b9739473798e41013a1b26fbe3bfcb04902f17a513214dc72bc71a5aa213448aef36a8c95766ff3e2fe5c3b81667b20d1ae23780fae05f9e6f69b2e507ee2688639ab41e8381b84cde03ff66b5ad1b55f697808b63e9f07a9b3c6d90cb8fdabc9cad6690f8feb44c17c3467424d59f971d0e5bc8</LicenseKey>
+		<IssueTime>2026-01-29T07:49:00</IssueTime>
+		<ExpireTime>2026-02-06T00:00:00</ExpireTime>
+		<LicenseKey>fecb91b3b566f373c1d862915f03a46cde85dc33cf4145f3b7d29a5ce7825b478d1bc896633878257d2830259e88d8791d64ca0b8809ed41f370b5d8a8659dc0f79a8fba879162aa31473c4b93d872cee4f10ed21283c0d2c8c7d7b2a4713b7d81071bb04cf7bfbbc7649c00224835d11505d93de699a8bb1d06884b518940f6919ab0a915fe7b5416083515d123f30db6fe502781c292f8a3bd675d729042c1f6662d376030cf618c00933355c5b65dbf6ca6f149830bd13e2fdca5584a66927ee369e0ad32f08372f1f7f921e6a7f73866b824ce47e4c33b5437ae213d18db9b65d58424d8fd5e7c61f74dd6e47960564b0882e48cb3e132cbc98a24e683a3</LicenseKey>
 		<License>
 			<LicenseId>{4C256767-E6E6-4AF5-BD68-9F7ABAD0C200}</LicenseId>
 			<Name>TC3 ADS</Name>
@@ -19,6 +19,16 @@
 			<LicenseId>{66689887-CCBD-452C-AC9A-039D997C6E66}</LicenseId>
 			<Name>TC3 PLC</Name>
 			<OrderNo>TC1200</OrderNo>
+		</License>
+		<License>
+			<LicenseId>{103F30C9-DF25-439E-837B-9DF80CB9356C}</LicenseId>
+			<Name>TC3 EtherCAT Redundancy 250</Name>
+			<OrderNo>TF6220</OrderNo>
+		</License>
+		<License>
+			<LicenseId>{740BD5CC-57C2-46E1-B4F7-146749714343}</LicenseId>
+			<Name>TC3 EtherCAT Redundancy unlimited</Name>
+			<OrderNo>TF6221</OrderNo>
 		</License>
 	</LicenseInfo>
 </TcLicenseInfo>
